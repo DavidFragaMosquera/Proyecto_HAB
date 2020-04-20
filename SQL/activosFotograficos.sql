@@ -11,12 +11,12 @@ CREATE TABLE usuarios (
   dni VARCHAR(9) NOT NULL,
   direccion VARCHAR(133) NOT NULL,
   mail VARCHAR(100) NOT NULL,
-  telefono VARCHAR(8)  ,
+  telefono VARCHAR(8),
   imagenes VARCHAR  (255),
   descripcion VARCHAR (1000),
   primer_acceso DATETIME NOT NULL,
   ultimo_acceso DATETIME NOT NULL,
-  ip_ultimo_acceso INT NOT NULL,
+  ip_ultimo_acceso INT NOT NULL
 );
 
 CREATE TABLE articulos (
