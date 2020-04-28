@@ -15,10 +15,10 @@ CREATE SCHEMA IF NOT EXISTS `ActivosFotograficos` DEFAULT CHARACTER SET utf8 ;
 USE `ActivosFotograficos` ;
 
 -- -----------------------------------------------------
--- Table `ActivosFotograficos`.`usuario`
+-- Table `ActivosFotograficos`.`usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`usuario` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`usuarios` (
+  `id` INT NULL AUTO_INCREMENT,
   `login` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `nombre` VARCHAR(20) NOT NULL,
@@ -37,23 +37,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ActivosFotograficos`.`articulo`
+-- Table `ActivosFotograficos`.`articulos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`articulo` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`articulos` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_usuario` INT NULL,
   `imagen` VARCHAR(50) NULL,
   `descripcion` VARCHAR(1000) NULL,
-  `precio` VARCHAR(45) NULL,
+  `precio` FLOAT NULL,
   `tipo` ENUM('cesion derechos', 'alquiler') NOT NULL,
   `subtipo` ENUM('e-commerce y producto', 'bodas y eventos', 'retrato y animales', 'camaras reflex', 'drones', 'accesorios') NOT NULL,
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_usuario_idx` (`id` ASC),
+  INDEX `id_usuario_idx` (`id_usuario` ASC),
   CONSTRAINT `id`
-    FOREIGN KEY (`id`)
-    REFERENCES `ActivosFotograficos`.`usuario` (`id`)
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `ActivosFotograficos`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -61,39 +61,53 @@ PACK_KEYS = DEFAULT;
 
 
 -- -----------------------------------------------------
--- Table `ActivosFotograficos`.`pedido`
+-- Table `ActivosFotograficos`.`pedidos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`pedido` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `precio` VARCHAR(45) NULL,
+CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`pedidos` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `id_usuario` INT NULL,
+  `precio` FLOAT NULL,
   `direccion` VARCHAR(45) NULL,
   `fecha_envio` DATE NULL,
   `fecha_inicio` DATE NULL,
   `fecha_fin` DATE NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_articulo_idx` (`id` ASC),
+  INDEX `id_articulo_idx` (`id_articulo` ASC),
+  INDEX `id_usuario_idx` (`id_usuario` ASC),
   CONSTRAINT `id_articulo`
-    FOREIGN KEY (`id`)
-    REFERENCES `ActivosFotograficos`.`articulo` (`id`)
+    FOREIGN KEY (`id_articulo`)
+    REFERENCES `ActivosFotograficos`.`articulos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `ActivosFotograficos`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ActivosFotograficos`.`rating`
+-- Table `ActivosFotograficos`.`ratings`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`rating` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`ratings` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `id_usuario` INT NULL,
   `valoracion` INT NULL,
   `comentario` VARCHAR(1000) NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_articulo_idx` (`id` ASC),
-  CONSTRAINT `id_articulo`
-    FOREIGN KEY (`id`)
-    REFERENCES `ActivosFotograficos`.`articulo` (`id`)
+  INDEX `id_usuario_idx` (`id_usuario` ASC),
+  INDEX `id_pedido_idx` (`id_articulo` ASC),
+  CONSTRAINT `id_pedido`
+    FOREIGN KEY (`id_articulo`)
+    REFERENCES `ActivosFotograficos`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `ActivosFotograficos`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -103,14 +117,14 @@ ENGINE = InnoDB;
 -- Table `ActivosFotograficos`.`consultas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`consultas` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
+  `id` INT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
   `ip` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_articulo_idx` (`id` ASC),
+  INDEX `id_articulo_idx` (`id_articulo` ASC),
   CONSTRAINT `id_articulo`
-    FOREIGN KEY (`id`)
-    REFERENCES `ActivosFotograficos`.`articulo` (`id`)
+    FOREIGN KEY (`id_articulo`)
+    REFERENCES `ActivosFotograficos`.`articulos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
