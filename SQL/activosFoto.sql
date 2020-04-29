@@ -73,13 +73,7 @@ CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`pedidos` (
   `fecha_inicio` DATE NULL,
   `fecha_fin` DATE NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_articulo_idx` (`id_articulo` ASC),
   INDEX `id_usuario_idx` (`id_usuario` ASC),
-  CONSTRAINT `id_articulo`
-    FOREIGN KEY (`id_articulo`)
-    REFERENCES `ActivosFotograficos`.`articulos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `id_usuario`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `ActivosFotograficos`.`usuarios` (`id`)
@@ -125,6 +119,27 @@ CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`consultas` (
   CONSTRAINT `id_articulo`
     FOREIGN KEY (`id_articulo`)
     REFERENCES `ActivosFotograficos`.`articulos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ActivosFotograficos`.`articulos_pedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ActivosFotograficos`.`articulos_pedidos` (
+  `id_articulo` INT NULL,
+  `id_pedido` INT NULL,
+  INDEX `id_articulo_idx` (`id_articulo` ASC),
+  INDEX `id_pedido_idx` (`id_pedido` ASC),
+  CONSTRAINT `id_articulo`
+    FOREIGN KEY (`id_articulo`)
+    REFERENCES `ActivosFotograficos`.`articulos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_pedido`
+    FOREIGN KEY (`id_pedido`)
+    REFERENCES `ActivosFotograficos`.`pedidos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
