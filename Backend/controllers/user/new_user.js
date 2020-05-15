@@ -3,7 +3,9 @@ const bcrypt = require('bcrypt');
 
 const { getConnection } = require('../../db');
 const { newUserSchema } = require('../../validations/user');
-const { generateError, randomString, sendEmail } = require('../../helpers');
+const { generateError, 
+        randomString, 
+        sendEmail } = require('../../helpers');
 
 async function newUser(req, res, next) {
   let connection;
@@ -16,23 +18,24 @@ async function newUser(req, res, next) {
       apellidos,
       mail,
       fecha_nacimiento,
+      login,
       password
     } = req.body;
 
     const [
-      existingUsername
-    ] = await connection.query('SELECT id FROM usuarios WHERE nombre=?', [
-      nombre
+      existingLogin
+    ] = await connection.query('SELECT id FROM usuarios WHERE login=?', [
+      login
     ]);
-    if (existingUsername.length) {
-      throw generateError('The username already exists on the DB', 409);
+    if (existingLogin.length) {
+      throw generateError('El nombre de usuario ya existe, prueba con otro!', 409);
     }
     const [
       existingEmail
     ] = await connection.query('SELECT id from usuarios where mail=?', [mail]);
 
     if (existingEmail.length) {
-      throw generateError('This email already exists in database', 409);
+      throw generateError('Ya tienes una cuenta en PicsFy', 409);
     }
     const dbPassword = await bcrypt.hash(password, 10); 
     const registrationCode = randomString(40);
@@ -41,18 +44,18 @@ async function newUser(req, res, next) {
      try {
       await sendEmail({
         email: mail,
-        title: "You must validate your account in the App in SQL",
-        content: `For validate your account paste this URL in your browser: ${validationURL}`,
+        title: "Validacion de cuenta en PicsFy",
+        content: `Para validar tu cuenta pega este enlace en tu navegador: ${validationURL}`,
       });
     } catch (error) {
       console.error(error);
-      throw new Error("Error in the mailing. Try again later.");
+      throw new Error("Error en el mail. Prueba más tarde");
     } 
 
     await connection.query(
       `INSERT INTO usuarios (nombre, apellidos, mail, fecha_nacimiento, login, password, primer_acceso, ultimo_acceso, registrationCode)
-      VALUES (?,?,?,?,'pepepe',?,NOW(),NOW(),?) `,
-      [nombre, apellidos, mail, fecha_nacimiento, dbPassword, registrationCode]
+      VALUES (?,?,?,?,?,?,NOW(),NOW(),?) `,
+      [nombre, apellidos, mail, fecha_nacimiento, login, dbPassword, registrationCode]
     );
  
     res.send({
@@ -69,4 +72,4 @@ async function newUser(req, res, next) {
   }
 }
 module.exports = { newUser };
-console.log('INTERNET!!!!!');
+console.log('Veña palanteeee!!!');
