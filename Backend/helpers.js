@@ -11,6 +11,7 @@ function generateError(message, code) {
 function randomString(size = 20) {
   return crypto.randomBytes(size).toString('hex').slice(0, size);
 }
+
 async function sendEmail({ email, title, content }) {
   sgMail.setApiKey(process.env.SENDGRID_KEY);
 
