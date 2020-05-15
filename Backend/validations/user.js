@@ -5,7 +5,7 @@ const passwordSchema = Joi.string()
   .min(6)
   .max(100)
   .required()
-  .error(new Error('La contraseña debe tener ente 6 y 10 caracteres'));
+  .error(new Error('La contraseña debe tener ente 6 y 100 caracteres'));
 
 const newUserSchema = Joi.object().keys({
   login: Joi.string()
