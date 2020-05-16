@@ -11,7 +11,10 @@ const port = process.env.PORT;
 
 const { newUser } = require('./controllers/user/new_user');
 const { validateUser } = require('./controllers/user/validation');
-const { loginUser } = require('./controllers/user/login')
+const { loginUser } = require('./controllers/user/login');
+const { getUser } = require('./controllers/user/get_data_user');
+const { editUser } = require('./controllers/user/edit_user');
+const { userIsAuthenticated } = require('./middlewares/auth');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -22,12 +25,11 @@ app.use(cors());
 app.post('/user', newUser);
 app.get('/user/validate', validateUser);
 app.post('/user/logIn', loginUser);
-
+app.get('/user/:id', userIsAuthenticated, getUser);
+app.put('/user/:id', userIsAuthenticated, editUser);
 
 /* 
 app.put('/user/:id/password', userIsAuthenticated, updatePasswordUser);
-app.get('user/:id', userIsAuthenticated, getUser);
-app.put('user/:id', userIsAuthenticated,editUser);
 app.delete('user/:id', userIsAuthenticated, deleteUser); */
 
 // RUTAS PRODUCTOS (categoria)
