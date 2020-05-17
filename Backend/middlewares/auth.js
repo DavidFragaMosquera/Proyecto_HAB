@@ -55,7 +55,7 @@ async function userIsAuthenticated(req, res, next) {
     const [user] = result;
 
     // comprobar que la fecha del token menor mayor que user.lastPasswordUpdate
-    // Tened en cuenta que el iat del token está guardado en segundos y node trabaja en
+    // El iat del token está guardado en segundos y node trabaja en
     // milisegundos
     if (new Date(iat * 1000) < new Date(user.ultima_modificacion_password)) {
       throw new Error('El token ya no vale, haz login para conseguir otro');

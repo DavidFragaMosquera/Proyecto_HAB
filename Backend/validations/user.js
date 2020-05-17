@@ -37,5 +37,6 @@ const newUserSchema = Joi.object().keys({
   password: passwordSchema
 });
 module.exports = {
-  newUserSchema
+  newUserSchema,
+  passwordSchema
 };

@@ -9,12 +9,15 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT;
 
+const { userIsAuthenticated } = require('./middlewares/auth');
 const { newUser } = require('./controllers/user/new_user');
 const { validateUser } = require('./controllers/user/validation');
 const { loginUser } = require('./controllers/user/login');
 const { getUser } = require('./controllers/user/get_data_user');
 const { editUser } = require('./controllers/user/edit_user');
-const { userIsAuthenticated } = require('./middlewares/auth');
+const { editPassword} = require ('./controllers/user/edit_password');
+const { disableUser } = require ('./controllers/user/disable_user');
+const { deleteUser } = require ('./controllers/user/delete_user');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -27,10 +30,9 @@ app.get('/user/validate', validateUser);
 app.post('/user/logIn', loginUser);
 app.get('/user/:id', userIsAuthenticated, getUser);
 app.put('/user/:id', userIsAuthenticated, editUser);
-
-/* 
-app.put('/user/:id/password', userIsAuthenticated, updatePasswordUser);
-app.delete('user/:id', userIsAuthenticated, deleteUser); */
+app.put('/user/:id/password', userIsAuthenticated, editPassword);
+app.put('/user/disable/:id', userIsAuthenticated, disableUser);
+app.delete('/user/:id', userIsAuthenticated, deleteUser);
 
 // RUTAS PRODUCTOS (categoria)
 /* 
