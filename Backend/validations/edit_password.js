@@ -7,7 +7,7 @@ const editPasswordSchema = Joi.object().keys({
   newPassword: passwordSchema,
   newPasswordRepeat: Joi.any()
     .valid(Joi.ref('newPassword'))
-    .error(generateError('Password must be the same', 400))
+    .error(generateError('Las contraseñas deben coincidir', 400))
 });
 
 module.exports = { editPasswordSchema };

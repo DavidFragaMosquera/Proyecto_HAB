@@ -6,15 +6,18 @@ const { editPasswordSchema } = require('../../validations/edit_password');
 const { generateError } = require('../../helpers');
 
 async function editPassword(req, res, next) {
+
   let connection;
+
   try {
+    
     const { id } = req.params;
-    // body: oldpassword, newPassword, newPasswordRepeat (opcional)
+  
     connection = await getConnection();
 
     await editPasswordSchema.validateAsync(req.body);
 
-    const { oldPassword, newPassword } = req.body;
+    const { oldPassword, newPassword, newPasswordRepeat } = req.body;
 
     if (Number(id) !== req.auth.id) {
       throw generateError(
@@ -24,8 +27,12 @@ async function editPassword(req, res, next) {
     }
 
     if (oldPassword === newPassword) {
-      throw generateError('New password can not be the same that old one', 400);
+      throw generateError('La nueva contraseña no puede ser la misma que la anterior', 400);
     }
+
+     if (newPassword !== newPasswordRepeat) {
+      throw generateError('Las contraseñas deben coincidir');
+    } 
 
     // Sacar la info del usuario de la base de datos
     const [currentUser] = await connection.query(`
@@ -34,25 +41,20 @@ async function editPassword(req, res, next) {
       [id]
     );
 
-    // Código un poco redundante
     if (!currentUser.length) {
-      throw generateError(`The user with id ${id} does not exist`, 404);
+      throw generateError(`El usuario con el id ${id} no existe`, 404);
     }
 
     const [dbUser] = currentUser;
 
-    // Comprobar que la vieja password envíada sea la correcta
-    // el orden es: passord sin encriptar, password encriptada
     const passwordsMath = await bcrypt.compare(oldPassword, dbUser.password);
 
     if (!passwordsMath) {
       throw generateError('Tu password antigua es incorrecta', 401);
     }
 
-    // generar hash de la password
     const dbNewPassword = await bcrypt.hash(newPassword, 10);
 
-    // actualizar la base de datos
     await connection.query(
       `
       UPDATE usuarios SET password=?, ultima_modificacion_password=now() WHERE id=?
@@ -63,7 +65,7 @@ async function editPassword(req, res, next) {
     res.send({
       status: 'ok',
       message:
-        'Password changes properly. Your tokens are not valid. You must login again.'
+        'Contraseña cambiada, debes hacer login otra vez para autentificarte'
     });
   } catch (error) {
     next(error);

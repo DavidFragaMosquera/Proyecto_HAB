@@ -28,4 +28,22 @@ async function sendEmail({ email, title, content }) {
 
   await sgMail.send(msg);
 }
-module.exports = { sendEmail, generateError, randomString };
+
+async function sendRecoveryEmail({ email, title, content }) {
+  sgMail.setApiKey(process.env.SENDGRID_KEY);
+
+  const msg = {
+    to: email,
+    from: 'davidrosales1990@gmail.com',
+    subject: title,
+    text: content,
+    html: `<div>
+      <h1>Recuperacion de contraseña</h1>
+      <p>${content}</p>  
+    </div>`
+  };
+
+  await sgMail.send(msg);
+}
+
+module.exports = { sendEmail, generateError, randomString, sendRecoveryEmail};

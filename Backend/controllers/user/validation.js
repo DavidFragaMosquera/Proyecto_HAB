@@ -17,11 +17,11 @@ async function validateUser(req, res, next) {
       [code]
     );
     if (result.affectedRows === 0) {
-      throw generateError('Wrong validation', 400);
+      throw generateError('validacion incorrecta', 400);
     }
     res.send({
       status: 'ok',
-      message: 'User is validated, now, you can login.'
+      message: 'Usuario validado. Puedes hacer login para activar tu cuenta'
       // data: {
       //   token
       // }
