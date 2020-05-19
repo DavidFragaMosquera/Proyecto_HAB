@@ -70,7 +70,7 @@ async function userIsAuthenticated(req, res, next) {
     if (connection) connection.release();
   }
 }
-//suponemos que los usuarios son administradores
+//suponemos que los usuarios son administradores(todos tienen control absoluto de sus cuentas)
 /* function userIsAdmin(req, res, next) {
   if (!req.auth && req.auth.role !== 'admin') {
     const error = new Error('No tienes privilegios de administración');

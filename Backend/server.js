@@ -14,6 +14,7 @@ const { userIsAuthenticated } = require('./middlewares/auth');
 const { newUser } = require('./controllers/user/new_user');
 const { validateUser } = require('./controllers/user/validation');
 const { loginUser } = require('./controllers/user/login');
+const { getAllUsers } = require('./controllers/user/get_all_users');
 const { getUser } = require('./controllers/user/get_data_user');
 const { editUser } = require('./controllers/user/edit_user');
 const { editPassword} = require ('./controllers/user/edit_password');
@@ -26,7 +27,8 @@ const { deleteUser } = require ('./controllers/user/delete_user');
 const { newProduct } = require('./controllers/products/new_product');
 const { deleteProduct } = require('./controllers/products/delete_product');
 const { getProduct } = require('./controllers/products/get_products');
-const { editProduct} = require ('./controllers/products/edit_product'); //revisar
+const { getAllProducts } = require('./controllers/products/get_all_products');
+const { editProduct} = require ('./controllers/products/edit_product'); 
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -37,6 +39,7 @@ app.use(cors());
 app.post('/user', newUser);
 app.get('/user/validate', validateUser);
 app.post('/user/logIn', loginUser);
+app.get('/users', getAllUsers);
 app.get('/user/:id', getUser);
 app.put('/user/:id', userIsAuthenticated, editUser);
 app.put('/user/password/:id', userIsAuthenticated, editPassword);
@@ -48,17 +51,13 @@ app.delete('/user/:id', userIsAuthenticated, deleteUser);
 // RUTAS PRODUCTOS
 app.post('/products', userIsAuthenticated, newProduct); 
 app.delete('/products/:id', userIsAuthenticated, deleteProduct);
+app.get('/products', getAllProducts);
 app.get('/products/:id', getProduct);
-app.put('/products/:id', userIsAuthenticated, editProduct); //revisar
+app.put('/products/:id', userIsAuthenticated, editProduct); 
 
-/* 
-app.get('/productos', listProducts); 
-app.get('/productos/:id', getProducts);
-app.put('productos/:id', userIsAuthenticated, editProduct);
-*/
-
-// RUTAS SUBPRODUCTO (subcategoria)
-
+/* app.get('/products/cesion', getCesionProducts);
+app.get('/products/renting', getRentingProducts);
+app.get('/products/cesion/ecommerce', getCommerceCesion); */
 // RUTAS DISPONIBILIDAD
 
 // RUTAS VALORACIONES (rating)
@@ -75,12 +74,12 @@ app.use((error, req, res, next) => {
 app.use((req, res) => {
   res.status(404).send({
     status: 'error',
-    message: 'Not found'
+    message: ' 😥 No encontrado 😥'
   });
 });
 
 app.listen(port, () => {
-  console.log(`Servidor funcionando en http://localhost:${port} 🚀`);
+  console.log(` 👍 Servidor funcionando en http://localhost:${port} 🚀`);
 });
   
   

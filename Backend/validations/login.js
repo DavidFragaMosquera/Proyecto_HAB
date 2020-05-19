@@ -5,7 +5,7 @@ const loginUser = Joi.string()
   .min(2)
   .max(20)
   .required()
-  .error(generateError('UserName field must have between 2 and 20 types', 400));
+  .error(generateError('El nombre de usuario debe tener entre 2 y 20 caracteres', 400));
 
 const passwordSchema = Joi.string()
   .min(6)

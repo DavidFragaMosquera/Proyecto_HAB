@@ -8,7 +8,7 @@ async function deleteUser(req, res, next) {
     const { id } = req.params;
     const [
       current
-    ] = await connection.query('SELECT  id FROM usuarios where id=?', [
+    ] = await connection.query('SELECT id FROM usuarios where id=?', [
       id
     ]);
 

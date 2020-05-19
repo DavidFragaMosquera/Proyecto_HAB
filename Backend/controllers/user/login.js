@@ -24,7 +24,7 @@ async function loginUser(req, res, next) {
 
     if (!dbUser.length) {
       throw generateError(
-        'No active user with this username. Remember valid your name',
+        'Ningún usuario activo con este nombre de usuario. Recuerda validar tu cuenta',
         404
       );
     }

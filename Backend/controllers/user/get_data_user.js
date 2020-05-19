@@ -20,7 +20,7 @@ async function getUser(req, res, next) {
     );
 
     if (!result.length) {
-      throw generateError(`There is not user with the id ${id}`, 404);
+      throw generateError(`There existe usuario con id ${id}`, 404);
     }
     const [userData] = result;
 

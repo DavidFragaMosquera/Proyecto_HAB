@@ -26,7 +26,10 @@ const newUserSchema = Joi.object().keys({
     .required()
     .error(new Error('Tu apellido debe tener entre 2 y 50 caracteres')),
 
-  mail: Joi.string().email().required().error(new Error('Email no valido')),
+  mail: Joi.string()
+    .email()
+    .required()
+    .error(new Error('Email no valido')),
 
   fecha_nacimiento: Joi.date()
     .format('YYYY-MM-DD')

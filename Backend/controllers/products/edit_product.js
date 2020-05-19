@@ -56,7 +56,7 @@ async function editProduct(req, res, next) {
       ]
     );
 
-    res.send({ status: 'ok', message: 'Articulo modificado correctamente!!' });
+    res.send({ status: 'ok', message: 'Articulo modificado correctamente 😁' });
 
   } catch (error) {
     next(error);

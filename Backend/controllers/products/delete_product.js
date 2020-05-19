@@ -19,7 +19,7 @@ async function deleteProduct(req, res, next) {
     );
 
     if (!current.length) {
-      throw generateError(`No existe un procucto con id ${id}`, 400);
+      throw generateError(`No existe un procucto con id ${id} 😣 `, 400);
     }
 
     //Con administradores
