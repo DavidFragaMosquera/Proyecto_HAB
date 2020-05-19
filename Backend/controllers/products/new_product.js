@@ -16,6 +16,7 @@ async function newProduct(req, res, next) {
     await newProductSchema.validateAsync(req.body);
   
     const {
+      
       nombre_articulo,
       descripcion,
       precio,

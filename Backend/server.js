@@ -25,10 +25,12 @@ const { deleteUser } = require ('./controllers/user/delete_user');
 
 // productos
 const { newProduct } = require('./controllers/products/new_product');
+const { editProduct} = require ('./controllers/products/edit_product'); 
 const { deleteProduct } = require('./controllers/products/delete_product');
 const { getProduct } = require('./controllers/products/get_products');
 const { getAllProducts } = require('./controllers/products/get_all_products');
-const { editProduct} = require ('./controllers/products/edit_product'); 
+const { getCategoryProducts} = require('./controllers/products/get_category_products'); 
+const { getSubcategoryProducts } = require('./controllers/products/get_subcategory_products');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -50,14 +52,13 @@ app.delete('/user/:id', userIsAuthenticated, deleteUser);
 
 // RUTAS PRODUCTOS
 app.post('/products', userIsAuthenticated, newProduct); 
+app.put('/products/:id', userIsAuthenticated, editProduct); 
 app.delete('/products/:id', userIsAuthenticated, deleteProduct);
 app.get('/products', getAllProducts);
 app.get('/products/:id', getProduct);
-app.put('/products/:id', userIsAuthenticated, editProduct); 
+app.get('/products/category/:tipo', getCategoryProducts); 
+app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); 
 
-/* app.get('/products/cesion', getCesionProducts);
-app.get('/products/renting', getRentingProducts);
-app.get('/products/cesion/ecommerce', getCommerceCesion); */
 // RUTAS DISPONIBILIDAD
 
 // RUTAS VALORACIONES (rating)
@@ -73,7 +74,7 @@ app.use((error, req, res, next) => {
 // Middleware no encontrado
 app.use((req, res) => {
   res.status(404).send({
-    status: 'error',
+    status: 'error 404',
     message: ' 😥 No encontrado 😥'
   });
 });

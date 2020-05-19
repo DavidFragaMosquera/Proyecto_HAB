@@ -11,11 +11,18 @@ async function getUser(req, res, next) {
     const { id } = req.params;
 
     const [result] = await connection.query(
-      `SELECT id , primer_acceso, login,nombre,apellidos,
-      fecha_nacimiento,
-      direccion, telefono
-      mail, descripcion,
-      imagen FROM usuarios WHERE id=?`,
+      `SELECT id,
+              primer_acceso, 
+              login,
+              nombre,
+              apellidos,
+              fecha_nacimiento,
+              direccion, 
+              telefono,
+              mail,
+              descripcion,
+              imagen  
+              FROM usuarios WHERE id=?`,
       [id]
     );
 
@@ -50,3 +57,5 @@ async function getUser(req, res, next) {
   }
 }
 module.exports = { getUser };
+
+
