@@ -2,7 +2,9 @@ require('dotenv').config();
 
 
 const { getConnection } = require('../../db');
-const { generateError, randomString, sendRecoveryEmail } = require('../../helpers');
+const { generateError,
+        randomString, 
+        sendRecoveryPassword } = require('../../helpers');
 const { recoveryPasswordSchema} = require('../../validations/reactivate_user');
 const bcrypt = require('bcrypt');
 
@@ -38,7 +40,7 @@ async function recoveryPassword(req, res, next) {
     
     //Enviamos email con nueva contraseña al usuario
     try {
-      await sendRecoveryEmail({
+      await sendRecoveryPassword({
         email: user.mail,
         title: 'Esta es tu nueva contraseña',
         content: `Tu nueva contraseña es ${tempPassword}. Por seguridad recomendamos que cambies tu contraseña en cuanto accedas a la pagina`

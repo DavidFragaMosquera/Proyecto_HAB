@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const { getConnection } = require('../../db');
 const { generateError } = require('../../helpers');
 const { loginSchema } = require('../../validations/login');
@@ -37,7 +36,7 @@ async function loginUser(req, res, next) {
     }
     const tokenPayload = { id: user.id };
     const token = jwt.sign(tokenPayload, process.env.SECRET, {
-      expiresIn: '30d'
+      expiresIn: '33d'
     });
     res.send({
       status: 'ok',

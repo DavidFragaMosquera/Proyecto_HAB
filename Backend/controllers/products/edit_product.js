@@ -28,7 +28,7 @@ async function editProduct(req, res, next) {
     if (!current.length) {
       throw generateError(`El articulo con el id ${ id } no existe`, 404);
     }
-    console.log( req.auth);
+    
     if (current[0].id_usuario !== req.auth.id ) {
       throw generateError(
         'No tienes permiso para actualizar este articulo ',

@@ -1,6 +1,6 @@
 require('dotenv').config();
-const bcrypt = require('bcrypt');
 
+const bcrypt = require('bcrypt');
 const { getConnection } = require('../../db');
 const { newUserSchema } = require('../../validations/user');
 const { generateError, 
