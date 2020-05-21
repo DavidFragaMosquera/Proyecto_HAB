@@ -19,7 +19,8 @@ async function getCategoryProducts(req, res, next) {
        subtipo, 
        fecha_inicio, 
        fecha_fin
-        FROM articulos WHERE tipo=?`,
+       FROM articulos 
+       WHERE tipo=?`,
       [tipo]
     );
 

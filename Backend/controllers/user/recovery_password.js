@@ -18,7 +18,6 @@ async function recoveryPassword(req, res, next) {
     
     connection = await getConnection();
     
-    // Buscamos el usuario en la base de datos
     const [
       db
     ] = await connection.query(
@@ -35,10 +34,8 @@ async function recoveryPassword(req, res, next) {
     
     const [user] = db;
     
-    //Creamos password temporal para el usuario.
     const tempPassword = randomString(10);
     
-    //Enviamos email con nueva contraseña al usuario
     try {
       await sendRecoveryPassword({
         email: user.mail,
@@ -52,9 +49,9 @@ async function recoveryPassword(req, res, next) {
       );
     }
     
-    //Ciframos la nueva contraseña
+    
     const tempDBPassword = await bcrypt.hash(tempPassword, 10);
-    //Actualizamos la base de datos con la nueva contraseña cifrada
+    
     await connection.query('UPDATE usuarios SET password=? where id=?', [
       tempDBPassword,
       user.id

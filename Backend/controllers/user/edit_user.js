@@ -6,7 +6,6 @@ const { generateError,
         processAndSavePhoto,
         deletePhoto } = require('../../helpers');
 
-
 async function editUser(req, res, next) {
     let connection;
     try {
@@ -20,8 +19,15 @@ async function editUser(req, res, next) {
                 direccion,
                 telefono,
                 mail,
-                descripcion,          
+                descripcion          
                  } = req.body;
+                 
+    const [existingLogin] = await connection.query('SELECT id FROM usuarios WHERE login=?', [
+      login
+    ]);
+    if (existingLogin.length) {
+      throw generateError('El nombre de usuario ya existe, prueba con otro!', 409);
+    }
 
     const [current] = await connection.query(` SELECT id, imagen FROM usuarios WHERE id=?`, [id]);
 
@@ -48,9 +54,16 @@ async function editUser(req, res, next) {
     } else {
       savedFileName = current.imagen;
     }
-
-    
-    await connection.query(` UPDATE usuarios SET login=?, nombre=?, apellidos=?, fecha_nacimiento=?, direccion=?, telefono=?, mail=?, descripcion=?, imagen=? WHERE id=?`,
+   
+    await connection.query(` UPDATE usuarios SET login=?, 
+                            nombre=?,  
+                            apellidos=?, 
+                            fecha_nacimiento=?, 
+                            direccion=?,
+                            telefono=?, 
+                            mail=?, 
+                            descripcion=?, 
+                            imagen=? WHERE id=?`,
         [ login, 
           nombre,
           apellidos,
@@ -62,7 +75,9 @@ async function editUser(req, res, next) {
           savedFileName,
           id ]
     );
+
     res.send({ status: 'ok', message: 'Usuario actualizado' });
+
   } catch (error) {
     next(error);
   } finally {

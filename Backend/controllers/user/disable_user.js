@@ -1,18 +1,20 @@
 require('dotenv').config();
+
 const { getConnection } = require('../../db');
 const { generateError } = require('../../helpers');
 
 async function disableUser(req, res, next) {
+
   let connection;
+
   try {
+
     connection = await getConnection();
+
     const { id } = req.params;
-    const [
-      current
-    ] = await connection.query(
+    const [current] = await connection.query(
       'SELECT active, id FROM usuarios where id=?',
-      [id]
-    );
+      [id]);
 
     if (!current.length) {
       throw generateError(`No existe el id ${id}`, 400);
@@ -26,13 +28,17 @@ async function disableUser(req, res, next) {
 
     await connection.query(`UPDATE usuarios SET active=0, ultima_modificacion_password=NOW() where id=?`, 
     [id]);
+
     res.send({
       status: 'ok',
       message: 'Usuario deshabilitado'
     });
+
   } catch (error) {
     next(error);
+    
   } finally {
+
     if (connection) connection.release();
   }
 }

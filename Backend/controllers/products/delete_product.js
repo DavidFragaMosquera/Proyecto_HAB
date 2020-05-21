@@ -22,10 +22,10 @@ async function deleteProduct(req, res, next) {
       throw generateError(`No existe un procucto con id ${id} 😣 `, 400);
     }
 
-    //Con administradores
-   /*  if (current[0].id_usuario !== req.auth.id && req.auth.role !== 'admin') {
-      throw generateError('Tienes que ser admin para realizar esta operacion', 400);
-    } */
+  
+   if (current[0].id_usuario !== req.auth.id) {
+      throw generateError('No tienes permiso para borrar este producto', 400);
+    } 
 
     await connection.query(
       'delete from articulos where id=?',
