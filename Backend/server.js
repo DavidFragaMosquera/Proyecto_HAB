@@ -33,6 +33,7 @@ const { getAllProducts } = require('./controllers/products/get_all_products');
 const { getCategoryProducts} = require('./controllers/products/get_category_products'); 
 const { getSubcategoryProducts } = require('./controllers/products/get_subcategory_products');
 const { buyProduct } = require('./controllers/products/buy_product');
+const { ratingProduct } = require('./controllers/products/rating_product'); 
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -62,12 +63,8 @@ app.get('/products/:id', getProduct);
 app.get('/products/category/:tipo', getCategoryProducts); 
 app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); 
 app.post('/products/pedido/:id', userIsAuthenticated, buyProduct);
+app.post('/products/pedido/rating/:id', userIsAuthenticated, ratingProduct);
 
-// RUTAS COMPRA
-/* 
-app.post('/products/pedido/rating/:id', userIsAuthenticated, ratingProduct); */
-
-// RUTAS VALORACIONES (rating)
 
 // Error middleware
 app.use((error, req, res, next) => {

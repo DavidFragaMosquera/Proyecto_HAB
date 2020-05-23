@@ -2,10 +2,6 @@ const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 const { generateError } = require('../helpers');
 
 const buyProductSchema = Joi.object().keys({
-
-    precio: Joi.number()
-    .required()
-    .error(generateError('El precio es obligatorio y solo puede ser de tipo numerico', 400)),
    
     direccion: Joi.string()
     .max(50)

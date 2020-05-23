@@ -10,7 +10,7 @@ const sgMail = require('@sendgrid/mail');
 const imageUploadPath = path.join(__dirname, process.env.UPLOADS_DIR);
 
 function formatDateToDB(date) {
-  return format(date, 'yyyy-MM-dd HH:mm:ss');
+  return format(date, 'yyyy-MM-dd');
 }
 
 function generateError(message, code) {
@@ -32,7 +32,7 @@ async function sendEmail({ email, title, content }) {
     subject: title,
     text: content,
     html: `<div>
-      <h1>Validate your email</h1>
+      <h1>Validación de correo</h1>
       <p>${content}</p>  
     </div>`
   };
@@ -56,6 +56,23 @@ async function sendRecoveryPassword({ email, title, content }) {
 
   await sgMail.send(msg);
 }
+
+async function purchaseConfirmation({ email, title, content }) {
+  sgMail.current[0].producto;
+
+  const msg = {
+    to: email,
+    from: 'davidrosales1990@gmail.com',
+    subject: title,
+    text: content,
+    html: `<div>
+      <h1>Confirmacion de compra</h1>
+      <p>${content}</p>  
+    </div>`
+  };
+
+  await sgMail.send(msg);
+} 
 
 async function processAndSavePhoto(uploadedImage) {
   
@@ -86,5 +103,6 @@ module.exports = { formatDateToDB,
                    randomString, 
                    sendRecoveryPassword,
                    processAndSavePhoto,
+                   purchaseConfirmation, 
                    deletePhoto
                    };
