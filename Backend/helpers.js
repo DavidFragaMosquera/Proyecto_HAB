@@ -58,7 +58,7 @@ async function sendRecoveryPassword({ email, title, content }) {
 }
 
 async function purchaseConfirmation({ email, title, content }) {
-  sgMail.current[0].producto;
+  sgMail.setApiKey(process.env.SENDGRID_KEY);
 
   const msg = {
     to: email,

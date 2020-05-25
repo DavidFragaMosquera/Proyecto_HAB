@@ -17,6 +17,7 @@ const { validateUser } = require('./controllers/user/validation');
 const { loginUser } = require('./controllers/user/login');
 const { getAllUsers } = require('./controllers/user/get_all_users');
 const { getUser } = require('./controllers/user/get_data_user');
+const { getUserProducts} = require('./controllers/user/get_user_products');
 const { editUser } = require('./controllers/user/edit_user');
 const { editPassword} = require ('./controllers/user/edit_password');
 const { disableUser } = require ('./controllers/user/disable_user');
@@ -32,6 +33,7 @@ const { getProduct } = require('./controllers/products/get_products');
 const { getAllProducts } = require('./controllers/products/get_all_products');
 const { getCategoryProducts} = require('./controllers/products/get_category_products'); 
 const { getSubcategoryProducts } = require('./controllers/products/get_subcategory_products');
+const { getRatingProducts } = require('./controllers/products/get_rating_products');
 const { buyProduct } = require('./controllers/products/buy_product');
 const { ratingProduct } = require('./controllers/products/rating_product'); 
 
@@ -42,28 +44,30 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'static')));
 
 // RUTAS USUARIO
-app.post('/user', newUser);
-app.get('/user/validate', validateUser);
-app.post('/user/logIn', loginUser);
-app.get('/users', getAllUsers);
-app.get('/user/:id', getUser);
-app.put('/user/:id', userIsAuthenticated, editUser);
-app.put('/user/password/:id', userIsAuthenticated, editPassword);
-app.put('/user/disable/:id', userIsAuthenticated, disableUser);
-app.put('/user/reactivate/:id', reactivateUser);
-app.put('/user/recovery/:id', recoveryPassword)
-app.delete('/user/:id', userIsAuthenticated, deleteUser); 
+app.post('/user', newUser); // NUevo usuario
+app.get('/user/validate', validateUser); //Validar usuario
+app.post('/user/logIn', loginUser); //Login usuario
+app.get('/users', getAllUsers); // Listar todos los usuarios (publico)
+app.get('/user/:id', getUser); // Listar usuario individual (publico)
+app.get('/user/products/:id', getUserProducts); // Listar productos de un usuario (publico)
+app.put('/user/:id', userIsAuthenticated, editUser); // Editar usuario (Solo registrados)
+app.put('/user/password/:id', userIsAuthenticated, editPassword); // Editar contraseña (Solo registrados)
+app.put('/user/disable/:id', userIsAuthenticated, disableUser); // Deshabilitar usuario (Solo registrados)
+app.put('/user/reactivate/:id', reactivateUser);  // Reactivar usuario (Solo registrados)
+app.put('/user/recovery/:id', recoveryPassword) // Recuperar contraseña (Solo registrados)
+app.delete('/user/:id', userIsAuthenticated, deleteUser); // Borrar usuario (Solo registrados)
 
 // RUTAS PRODUCTOS
-app.post('/products', userIsAuthenticated, newProduct); 
-app.put('/products/:id', userIsAuthenticated, editProduct); 
-app.delete('/products/:id', userIsAuthenticated, deleteProduct);
-app.get('/products', getAllProducts);
-app.get('/products/:id', getProduct);
-app.get('/products/category/:tipo', getCategoryProducts); 
-app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); 
-app.post('/products/pedido/:id', userIsAuthenticated, buyProduct);
-app.post('/products/pedido/rating/:id', userIsAuthenticated, ratingProduct);
+app.post('/products', userIsAuthenticated, newProduct); //Crear producto (Solo registrados)
+app.put('/products/:id', userIsAuthenticated, editProduct); // Editar producto (Solo registrados)
+app.delete('/products/:id', userIsAuthenticated, deleteProduct); // Borrar producto (Solo registrados)
+app.get('/products', getAllProducts); // Listar todos los productos (publico)
+app.get('/products/:id', getProduct); // Listar productos individualmente (publico)
+app.get('/products/category/:tipo', getCategoryProducts); // Listar productos por categoria (publico)
+app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); // Listar productos por subcategoria (publico)
+app.get('/products/rating', getRatingProducts); // Listar producto valorado (publico)
+app.post('/products/pedido/:id', userIsAuthenticated, buyProduct); // Comprar producto (Solo registrados)
+app.post('/pedidos/rating/:id', userIsAuthenticated, ratingProduct); // Valoracion de producto comprado (Solo registrados)
 
 
 // Error middleware
