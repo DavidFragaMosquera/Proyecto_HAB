@@ -36,6 +36,9 @@ const { getSubcategoryProducts } = require('./controllers/products/get_subcatego
 const { getRatingProducts } = require('./controllers/products/get_rating_products');
 const { buyProduct } = require('./controllers/products/buy_product');
 const { ratingProduct } = require('./controllers/products/rating_product'); 
+const { availabilityProduct } = require('./controllers/products/availability_product');
+const { searchProduct } = require('./controllers/products/search_product');
+const { searchPrice } = require('./controllers/products/search_price');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -67,7 +70,10 @@ app.get('/products/category/:tipo', getCategoryProducts); // Listar productos po
 app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); // Listar productos por subcategoria (publico)
 app.get('/products/rating', getRatingProducts); // Listar producto valorado (publico)
 app.post('/products/pedido/:id', userIsAuthenticated, buyProduct); // Comprar producto (Solo registrados)
-app.post('/pedidos/rating/:id', userIsAuthenticated, ratingProduct); // Valoracion de producto comprado (Solo registrados)
+app.post('/pedidos/rating/:id', userIsAuthenticated, ratingProduct); // Valoracion de producto adquirido (Solo registrados)
+app.get('/search/availability', availabilityProduct); // Buscar disponibilidad de producto, ordenado por fecha de la misma (publico)
+app.get('/search', searchProduct); // Busqueda general por palabras
+app.get('/search/price', searchPrice); // Busqueda por precio
 
 
 // Error middleware
