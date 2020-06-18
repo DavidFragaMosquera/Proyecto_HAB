@@ -1,0 +1,175 @@
+<template>
+  <div>
+   <vue-headful title="Nuevo Usuario" />
+    <!-- <menucustom></menucustom> -->
+    <h2>Registrate!</h2>
+    <p v-show="required">
+      TIENES DATOS AÚN POR RELLENAR.
+    </p>
+    <!-- FORMULARIO -->
+    <div>
+      <form>
+      <label for="login">Login</label>
+      <input
+        type="text"
+        name="login"
+        placeholder="Login"
+        v-model="login"
+      />
+      <br />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Contraseña"
+        v-model="password"
+      />
+      
+      <br />
+      <label for="nombre">Nombre</label>
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Nombre del usuario"
+        v-model="nombre"
+      />
+      <br />
+      <label for="apellidos">Apellidos</label>
+      <input
+        type="text"
+        name="apellidos"
+        placeholder="Apellidos del usuario"
+        v-model="apellidos"
+      />
+      <br />
+      <label for="mail">Email</label>
+      <input
+        type="email"
+        name="mail"
+        placeholder="Email"
+        v-model="mail"
+      />
+      <br />
+           <label for="fecha_nacimiento">Fecha nacimiento:</label>
+      <input
+        type="date"
+        name="fecha_nacimiento"
+        placeholder="Fecha de nacimiento"
+        v-model="fecha_nacimiento"
+      />
+      <br />
+      <br />
+      </form>
+        <button @click="addUser(login, nombre, apellidos, mail, password, fecha_nacimiento)">
+        CREAR
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import Swal from "sweetalert2";
+export default {
+  name: "NewUser",
+  components: { /* menucustom */ },
+  data() {
+    return {
+      login: "",
+      password: "",
+      nombre: "",
+      apellidos: "",
+      mail: "",
+      fecha_nacimiento: "",
+      correctData: false,
+      required: false,
+    };
+  },
+  methods: {
+    validatingData() {
+      if (
+        this.login === "" ||
+        this.password === "" ||
+        this.nombre === "" ||
+        this.apellidos === "" ||
+        this.mail === "" ||
+        this.fecha_nacimiento === ""
+      ) {
+        this.correctData = false; // NO ENVIAR //
+        this.required = true;
+      } else {
+        this.correctData = true; // SI ENVIAR //
+        this.required = false;
+      }
+    },
+    addUser(login, password, nombre, apellidos, mail, fecha_nacimiento) {
+      // VALIDANDO DATOS DEL FORMULARIO //
+      this.validatingData();
+      if (this.correctData === true) {
+        let self = this;
+        axios 
+          .post("http://localhost:3000/new-user", {
+            login: self.login,
+            nombre: self.nombre,
+            apellidos: self.apellidos,
+            mail: self.mail,
+            password: self.password,
+            fecha_nacimiento: self.fecha_nacimiento
+          })
+          .then(function(response) {
+            self.emptyFields();
+            self.required = false;
+            Swal.fire({
+              icon: "success",
+              title: 'Cliente creado',
+              text: "Revisa tu mail para validad la cuenta 😀",
+              timer: 3000
+      });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No has rellenado todos los campos',
+    timer: 2000
+});
+      }
+    },
+    emptyFields() {
+      this.login = "";
+      this.nombre = "";
+      this.apellidos = "";
+      this.mail = "";
+      this.password = "";
+      this.fecha_nacimiento = "";
+    },
+  },
+};
+</script>
+
+<style scoped>
+p {
+  color: red;
+}
+form {
+  padding: 1rem;
+  color: orange;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  flex-direction: column;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+}
+button{
+  color: white;
+  background: orange;
+  padding: 1rem 2.5rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border-radius: 20px;
+}
+</style>
