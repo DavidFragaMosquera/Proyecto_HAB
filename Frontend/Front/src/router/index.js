@@ -24,12 +24,27 @@ Vue.use(VueRouter)
     } */
   },
   {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/UserProfile.vue"),
+  },
+  {
     path: '/products',
     name: 'Products',
     component: () => import('../views/Products.vue'),
 /*     meta: {
       allowAnonymous: false, //ruta privada
     }, */
+  },
+  {
+    path: '/products/alquiler/',
+    name: 'Renting',
+    component: () => import('../views/Renting.vue'),
+  },
+  {
+    path: '/products/cesion/',
+    name: 'Cesion',
+    component: () => import('../views/Cesion.vue'),
   },
   {
     path: '/about',

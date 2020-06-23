@@ -16,6 +16,7 @@ async function getProduct(req, res, next) {
        descripcion, 
        precio, 
        tipo, 
+       imagen,
        subtipo, 
        fecha_inicio, 
        fecha_fin, 
@@ -29,9 +30,11 @@ async function getProduct(req, res, next) {
     const [articulos] = result;
 
     const payload = {
+      id: articulos.id,
       nombre_articulo: articulos.nombre_articulo,
       descripcion: articulos.descripcion,
       precio: articulos.precio,
+      imagen: articulos.imagen,
       tipo: articulos.tipo,
       subtipo: articulos.subtipo,
       fecha_inicio: articulos.fecha_inicio,

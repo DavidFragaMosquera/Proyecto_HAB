@@ -20,6 +20,7 @@ async function getUser(req, res, next) {
               direccion, 
               telefono,
               mail,
+              imagen,
               descripcion,
               imagen  
               FROM usuarios WHERE id=?`,
@@ -39,6 +40,7 @@ async function getUser(req, res, next) {
       fecha_nacimiento: userData.fecha_nacimiento,
       direccion: userData.direccion,
       telefono: userData.telefono,
+      imagen:userData.imagen,
       mail: userData.mail,
       descripcion: userData.descripcion
     };

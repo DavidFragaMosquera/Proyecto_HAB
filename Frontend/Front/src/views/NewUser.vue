@@ -1,7 +1,6 @@
 <template>
   <div>
    <vue-headful title="Nuevo Usuario" />
-    <!-- <menucustom></menucustom> -->
     <h2>Registrate!</h2>
     <p v-show="required">
       TIENES DATOS AÚN POR RELLENAR.

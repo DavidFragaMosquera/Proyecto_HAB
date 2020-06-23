@@ -2,22 +2,18 @@ require('dotenv').config();
 
 const { getConnection } = require('../../db');
 const { generateError, processAndSavePhoto, deletePhoto } = require('../../helpers');
-const { newProductSchema} = require('../../validations/product');
+const { editProductSchema} = require('../../validations/edit_product');
 
 async function editProduct(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
-    await newProductSchema.validateAsync(req.body);
+    await editProductSchema.validateAsync(req.body);
     const { id } = req.params;
     const {
       nombre_articulo, 
       descripcion, 
       precio, 
-      tipo, 
-      subtipo, 
-      fecha_inicio, 
-      fecha_fin 
       } = req.body;
 
     const [
@@ -59,19 +55,11 @@ async function editProduct(req, res, next) {
       nombre_articulo=?,
       descripcion=?,
       precio=?,
-      tipo=?,
-      subtipo=?,
-      fecha_inicio=?,
-      fecha_fin=?,
       imagen=? WHERE id=?`,
       [
         nombre_articulo,
         descripcion,
         precio,
-        tipo,
-        subtipo,
-        fecha_inicio,
-        fecha_fin,
         savedFileName,
         id
       ]

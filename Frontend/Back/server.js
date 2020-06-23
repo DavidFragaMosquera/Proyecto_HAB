@@ -67,7 +67,7 @@ app.post('/products', userIsAuthenticated, newProduct); //Crear producto (Solo r
 app.put('/products/:id', userIsAuthenticated, editProduct); // Editar producto (Solo registrados)
 app.delete('/products/:id', userIsAuthenticated, deleteProduct); // Borrar producto (Solo registrados)
 app.get('/products', getAllProducts); // Listar todos los productos (publico)
-app.get('/products/:id', getProduct); // Listar productos individualmente (publico)
+app.get('/product/:id', getProduct); // Listar productos individualmente (publico)
 app.get('/products/category/:tipo', getCategoryProducts); // Listar productos por categoria (publico)
 app.get('/products/category/:tipo/:subtipo', getSubcategoryProducts); // Listar productos por subcategoria (publico)
 app.get('/products/rating', getRatingProducts); // Listar producto valorado (publico)

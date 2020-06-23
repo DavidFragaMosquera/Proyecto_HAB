@@ -1,5 +1,5 @@
 <template>
-  <div class="todo">
+  <div>
 <!--     <div>
       <label for="bySearch">Búsqueda</label>
       <br />
@@ -11,6 +11,8 @@
         placeholder="Busca tu articulo 🔍"
       />
     </div> -->
+
+    <!-- VER ARTICULO DE FORMA INDIVIDUAL -->
       <div class="articulo" v-show="verArticulos">
          <h3>
           {{articulo.nombre_articulo}}
@@ -29,65 +31,70 @@
         <br>
         <button @click="verArticuloEvent">Volver</button>
       </div>
-
-    <div class="articulos"
+    <!-- VER ARTICULO DE FORMA INDIVIDUAL -->
+<!-- VER TODAS LAS CAMARAS -->
+    <div class="camaras"
           v-show="!verArticulos">  
-          <h2>Todos los articulos</h2>
-      <div class="Allproducts" 
-           v-for="(articulo, index) in articulos" 
-           :key="articulo.id">
-        <img :src="articulo.imagen" alt="foto articulo" 
-        @click="mostrarArticuloEvent(index)">
+          <h2>Camaras</h2>
+      <div  
+           v-for="(camara, index) in camaras" 
+           :key="camara.id">
+        <img :src="camara.imagen" alt="foto camara para alquilar" 
+        @click="mostrarCamarasEvent(index)">
       </div>
     </div>
-
+<!-- VER TODOS LAS CAMARAS -->
+<!-- VER TODOS LOS DRONES -->
+        <div 
+          v-show="!verArticulos">  
+          <h2>Drones</h2>
+      <div class="Drones" 
+           v-for="(dron, index) in drones" 
+           :key="dron.tittle">
+        <img :src="dron.imagen" alt="foto dron para alquilar" 
+        @click="mostrarDronesEvent(index)">
+      </div>
+    </div>
+<!-- VER TODOS LOS DRONES -->
+<!-- VER TODOS LOS ACCESORIOS-->
       <div 
           v-show="!verArticulos">  
-        <h2><router-link :to="{ name:'Cesion'}"> Cesion derechos de imagen</router-link></h2>
-      <div class="Cesiones" 
-           v-for="(cesion, index) in cesiones" 
-           :key="cesion.tittle">
-        <img :src="cesion.imagen" alt="foto alquiler de equipos" 
-        @click="mostrarCesionEvent(index)">
+          <h2>Accesorios</h2>
+      <div class="Accesorios" 
+           v-for="(accesorio, index) in accesorios" 
+           :key="accesorio.tittle">
+        <img :src="accesorio.imagen" alt="foto accesorio para alquilar" 
+        @click="mostrarAccesoriosEvent(index)">
       </div>
     </div>
-    
-      <div 
-          v-show="!verArticulos">  
-        <h2><router-link :to="{ name:'Renting'}"> Alquiler de equipos</router-link></h2>
-      <div class="Alquileres" 
-           v-for="(alquiler, index) in alquileres" 
-           :key="alquiler.tittle">
-        <img :src="alquiler.imagen" alt="foto alquiler de equipos" 
-        @click="mostrarAlquilerEvent(index)">
-      </div>
-    </div>
+<!-- VER TODOS LOS ACCESORIOS-->
+    <router-link :to="{ name:'Products'}"> Volver </router-link>
   </div>
 </template>
 
 <script>
 /* import Swal from "sweetalert2"; */
 export default {
-name: 'listaproductos',
+name: 'listaalquileres',
 props:{
-    articulos: Array,
+    camaras: Array,
     articulo: Object,
-    cesiones: Array,
-    alquileres: Array,
+    drones: Array,
+    accesorios: Array,
     verArticulos: Boolean,
     id: Number
 }, 
 methods: {
-  mostrarArticuloEvent(index) {  //mostrar
-      let data = this.articulos[index].id;
+  mostrarCamarasEvent(index) {
+      let data = this.camaras[index].id;
       this.$emit("go", data);
     },
-  mostrarCesionEvent(index) {  //mostrar
-      let data = this.cesiones[index].id;
+  mostrarDronesEvent(index) {
+      let data = this.drones[index].id;
       this.$emit("go", data);
     },
-  mostrarAlquilerEvent(index) {  //mostrar
-      let data = this.alquileres[index].id;
+  mostrarAccesoriosEvent(index) {
+      let data = this.accesorios[index].id;
       this.$emit("go", data);
     },
   verArticuloEvent() {
@@ -115,7 +122,7 @@ methods: {
       )
     },
 }, */
-/* 
+/* methods:{
 buy(){
   this.$router.push("/user/logIn");
 
@@ -131,7 +138,5 @@ buy(){
 </script>
 
 <style scoped>
-div{
-display: inline-block;
-}
+   
 </style>

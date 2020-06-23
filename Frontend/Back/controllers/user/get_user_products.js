@@ -14,7 +14,7 @@ async function getUserProducts(req, res, next) {
     const { id } = req.params
 
     const [respuesta] = await connection.query(
-      `SELECT  nombre_articulo, descripcion, precio, tipo, subtipo, imagen, disponibilidad FROM articulos WHERE id_usuario=?
+      `SELECT  nombre_articulo, descripcion, precio, tipo, subtipo, imagen, disponibilidad, id FROM articulos WHERE id_usuario=?
   ORDER BY fecha_inicio`,
       [id]
     );
@@ -22,7 +22,7 @@ async function getUserProducts(req, res, next) {
     if (!respuesta.length) {
       throw generateError('No tienes ningun articulo subido, animate con el primero!!', 401);
     }
-    const articulos = [respuesta];
+    const articulos = respuesta;
     
     res.send({
       status: 'ok',

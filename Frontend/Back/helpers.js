@@ -78,7 +78,7 @@ async function purchaseConfirmation({ email, title, content }) {
 
 async function processAndSavePhoto(uploadedImage) {
   
-  const savedFileName = `http://localhost:3000/uploads/${uuid.v1()}.jpg`;
+  const savedFileName = `${uuid.v1()}.jpg`;
 
   await fs.ensureDir(imageUploadPath);
 

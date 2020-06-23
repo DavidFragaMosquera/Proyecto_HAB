@@ -17,6 +17,7 @@ async function getSubcategoryProducts(req, res, next) {
        precio, 
        tipo, 
        subtipo, 
+       imagen,
        fecha_inicio, 
        fecha_fin
         FROM articulos WHERE tipo=? AND subtipo=?`,

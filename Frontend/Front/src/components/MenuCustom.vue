@@ -4,6 +4,7 @@
       <p><router-link :to="{ name:'Login'}"> Login </router-link></p>
       <p><router-link :to="{ name:'Products'}">Productos</router-link></p>
       <p><router-link :to="{ name:'NewUser'}"> Registrate </router-link></p>
+      <p><router-link :to="{ name:'Profile'}"> Mi perfil </router-link></p>
       <p><router-link :to="{ name:'About'}"> About</router-link></p>
 
       <br/>

@@ -12,7 +12,7 @@ async function editUser(req, res, next) {
         await editUserSchema.validateAsync(req.body);
         connection = await getConnection();
         const { id } = req.params;
-        const { login, 
+        const {  
                 nombre,
                 apellidos,
                 fecha_nacimiento,
@@ -22,12 +22,12 @@ async function editUser(req, res, next) {
                 descripcion          
                  } = req.body;
                  
-    const [existingLogin] = await connection.query('SELECT id FROM usuarios WHERE login=?', [
+  /*   const [existingLogin] = await connection.query('SELECT id FROM usuarios WHERE login=?', [
       login
     ]);
     if (existingLogin.length) {
       throw generateError('El nombre de usuario ya existe, prueba con otro!', 409);
-    }
+    } */
 
     const [current] = await connection.query(` SELECT id, imagen FROM usuarios WHERE id=?`, [id]);
 
@@ -55,7 +55,7 @@ async function editUser(req, res, next) {
       savedFileName = current.imagen;
     }
    
-    await connection.query(` UPDATE usuarios SET login=?, 
+    await connection.query(` UPDATE usuarios SET  
                             nombre=?,  
                             apellidos=?, 
                             fecha_nacimiento=?, 
@@ -64,7 +64,7 @@ async function editUser(req, res, next) {
                             mail=?, 
                             descripcion=?, 
                             imagen=? WHERE id=?`,
-        [ login, 
+        [  
           nombre,
           apellidos,
           fecha_nacimiento,

@@ -1,10 +1,6 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 const editUserSchema = Joi.object().keys({
-  login: Joi.string()
-    .max(20)
-    .min(2)
-    .error(new Error('Tu nombre de usuario debe tener entre 2 y 20 caracteres')),
 
   nombre: Joi.string()
     .max(50)

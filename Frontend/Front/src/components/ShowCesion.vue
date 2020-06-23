@@ -1,5 +1,5 @@
 <template>
-  <div class="todo">
+  <div>
 <!--     <div>
       <label for="bySearch">Búsqueda</label>
       <br />
@@ -30,38 +30,39 @@
         <button @click="verArticuloEvent">Volver</button>
       </div>
 
-    <div class="articulos"
+    <div class="ecommerce_productos"
           v-show="!verArticulos">  
-          <h2>Todos los articulos</h2>
-      <div class="Allproducts" 
-           v-for="(articulo, index) in articulos" 
-           :key="articulo.id">
-        <img :src="articulo.imagen" alt="foto articulo" 
+          <h2>Fotografias e-commerce y producto</h2>
+      <div 
+           v-for="(ecommerce_producto, index) in ecommerce_productos" 
+           :key="ecommerce_producto.id">
+        <img :src="ecommerce_producto.imagen" alt="foto ecommerce y producto" 
         @click="mostrarArticuloEvent(index)">
       </div>
     </div>
 
-      <div 
+        <div 
           v-show="!verArticulos">  
-        <h2><router-link :to="{ name:'Cesion'}"> Cesion derechos de imagen</router-link></h2>
-      <div class="Cesiones" 
-           v-for="(cesion, index) in cesiones" 
-           :key="cesion.tittle">
-        <img :src="cesion.imagen" alt="foto alquiler de equipos" 
-        @click="mostrarCesionEvent(index)">
+          <h2>Fotografias bodas y eventos</h2>
+      <div class="Bodas y eventos" 
+           v-for="(bodas_eventos, index) in bodas_eventoss" 
+           :key="bodas_eventos.tittle">
+        <img :src="bodas_eventos.imagen" alt="foto bodas y eventos" 
+        @click="mostrarBodasEvent(index)">
       </div>
     </div>
     
       <div 
           v-show="!verArticulos">  
-        <h2><router-link :to="{ name:'Renting'}"> Alquiler de equipos</router-link></h2>
-      <div class="Alquileres" 
-           v-for="(alquiler, index) in alquileres" 
-           :key="alquiler.tittle">
-        <img :src="alquiler.imagen" alt="foto alquiler de equipos" 
-        @click="mostrarAlquilerEvent(index)">
+          <h2>Fotografias retrato y naturaleza</h2>
+      <div class="Retrato" 
+           v-for="(retrato_naturaleza, index) in retrato_naturalezas" 
+           :key="retrato_naturaleza.tittle">
+        <img :src="retrato_naturaleza.imagen" alt="foto retrato y naturaleza" 
+        @click="mostrarImagenEvent(index)">
       </div>
     </div>
+    <router-link :to="{ name:'Products'}"> Volver </router-link>
   </div>
 </template>
 
@@ -70,24 +71,24 @@
 export default {
 name: 'listaproductos',
 props:{
-    articulos: Array,
+    ecommerce_productos: Array,
     articulo: Object,
-    cesiones: Array,
-    alquileres: Array,
+    bodas_eventoss: Array,
+    retrato_naturalezas: Array,
     verArticulos: Boolean,
     id: Number
 }, 
 methods: {
-  mostrarArticuloEvent(index) {  //mostrar
-      let data = this.articulos[index].id;
+  mostrarArticuloEvent(index) {
+      let data = this.ecommerce_productos[index].id;
       this.$emit("go", data);
     },
-  mostrarCesionEvent(index) {  //mostrar
-      let data = this.cesiones[index].id;
+  mostrarBodasEvent(index) {
+      let data = this.bodas_eventoss[index].id;
       this.$emit("go", data);
     },
-  mostrarAlquilerEvent(index) {  //mostrar
-      let data = this.alquileres[index].id;
+  mostrarImagenEvent(index) {
+      let data = this.retrato_naturalezas[index].id;
       this.$emit("go", data);
     },
   verArticuloEvent() {
@@ -115,7 +116,7 @@ methods: {
       )
     },
 }, */
-/* 
+/* methods:{
 buy(){
   this.$router.push("/user/logIn");
 
@@ -131,7 +132,5 @@ buy(){
 </script>
 
 <style scoped>
-div{
-display: inline-block;
-}
+   
 </style>
