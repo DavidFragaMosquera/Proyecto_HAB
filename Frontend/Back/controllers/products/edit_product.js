@@ -13,7 +13,7 @@ async function editProduct(req, res, next) {
     const {
       nombre_articulo, 
       descripcion, 
-      precio, 
+      precio
       } = req.body;
 
     const [

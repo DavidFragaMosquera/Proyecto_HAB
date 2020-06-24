@@ -9,7 +9,9 @@
         :cesiones="cesiones" 
         :verArticulos="verArticulos"
         v-on:go="mostrarArticulo"
-        v-on:verArticulo="verArticulo">
+        v-on:verArticulo="verArticulo"
+        :comprar="comprar"
+        >
         </listaproductos>
 
     </div>
@@ -34,10 +36,12 @@ export default {
       cesiones: [],
       alquileres: [],
       verArticulos: false,
+      comprar: []
     };
   },
   methods: {
-    // FUNCIÓN PARA MOSTRAR TODOS LOS PRODUCTOS
+
+// FUNCIÓN PARA MOSTRAR TODOS LOS PRODUCTOS
     showProducts() {
       let self = this;
       
@@ -53,7 +57,7 @@ export default {
           console.error(error);
         });
     },
-    // FUNCION PARA MOSTRAR ARTICULOS DE CESION DE IMAGENES
+// FUNCION PARA MOSTRAR ARTICULOS DE CESION DE IMAGENES
       showCesion() {
       let self = this;
       axios
@@ -68,7 +72,7 @@ export default {
           console.error(error);
         });
     },
-    // FUNCION PARA MOSTRAR LOS ARTICULOS EN ALQUILER
+// FUNCION PARA MOSTRAR LOS ARTICULOS EN ALQUILER
       showRent() {
       let self = this;
   
@@ -84,7 +88,7 @@ export default {
           console.error(error);
         });
     },
-    // FUNCION PARA MOSTRAR LOS ARTICULOS DE FORMA INDIVIDUAL
+// FUNCION PARA MOSTRAR LOS ARTICULOS DE FORMA INDIVIDUAL
       mostrarArticulo(index) {
       let self = this;
       let data = index;
@@ -102,13 +106,58 @@ export default {
     },
     verArticulo(){
       this.verArticulos=false;
-    }
+    },
+// FUNCION PARA COMPRAR UN PRODUCTO
+/*       buyProduct() {
+        this.validateBuy();
+        let data = articulo.id
+        const self = this;
+        const token = localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        axios
+        .post("http://localhost:3000/products/pedido/" + data, {
+          direccion: self.direccion,
+          fecha_inicio: self.fecha_inicio,
+          fecha_fin: self.fecha_fin
+    })
+    .then(function(response){
+        Swal.fire({
+            icon: "success",
+            title: "Articulo comprado con exito",
+            text: "Revisa tu mail para la confirmación de la compra",
+            timer: "3000"
+          });
+        self.emptyBuy();
+    })
+    .catch(function(error){
+      console.error(error.response.data.message)
+    });
+  },
+    validateBuy() {
+      if (
+        this.direccion === "" ||
+        this.fecha_inicio === "" ||
+        this.fecha_fin === ""
+      ) {
+        this.correctData = false;
+        this.require = true;
+      } else {
+        this.correctData = true;
+        this.correctData = false;
+      }
+    },
+    emptyBuy() {
+      this.direccion = "";
+      this.fecha_inicio = "";
+      this.fecha_fin ="";
+  } */
   },
   created() {
     this.showProducts();
     this.showCesion();
     this.showRent();
+   /*  this.buyProduct(); */
   },
+
 };
 </script>
-
