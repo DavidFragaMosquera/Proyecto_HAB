@@ -23,6 +23,21 @@
         <button @click="showEditProfile()">Editar perfil</button>
         <button @click="showNewProduct()">Nuevo articulo</button>
         <button @click="showMyProducts()">Mis productos</button>
+        <button @click="showBuyProducts()">Productos adquiridos</button>
+<!-- LISTADO ARTICULOS ADQUIRIDOS -->
+        <div class="boughtProducts" v-show="!articulosComprados">
+          <h3>Articulos adquiridos</h3>
+          <ul v-for="articuloAdquirido in articulosAdquiridos" :key="articuloAdquirido">
+            <li><img :src="articuloAdquirido.imagen" alt="imagen articulo"></li>
+            <li>{{ articuloAdquirido.nombre_articulo }}</li>
+            <li>{{ articuloAdquirido.precio }}</li>
+            <li>{{ articuloAdquirido.direccion }}</li>
+            <li>Fecha Inicio: {{ articuloAdquirido.fecha_inicio }}</li>
+            <li>Fecha Finalización: {{ articuloAdquirido.fecha_fin }}</li>
+            <li>Pedido nº: {{ articuloAdquirido.id }}</li>
+            <button @click="ratingProduct(articuloAdquirido)">Valorar</button>
+          </ul>
+        </div>
 <!-- NUEVO ARTICULO -->
     <div class="nuevoArticulo" v-show="seeProduct">
       <h2>Sube un nuevo articulo</h2>
@@ -30,14 +45,13 @@
         <fieldset>
           <ul>
             <li>
-              <input type="file" id="imagen" ref="imagen" @change="handleFileUpload()" />
+              <input type="file" id="imagenArticulo" ref="imagenArticulo" @change="handleFileUploadArticulo()" />
             </li>
             <li>
               <label for="nombre_articulo">Nombre</label>
               <br/>
               <input type="text" name="nombre_articulo" id="nombre_articulo" v-model="nombre_articulo" />
             </li>
-
             <li>
               <label for="tipo">Categoria:</label>
               <br/>
@@ -167,6 +181,7 @@ export default {
       articulos:[],
       showEdit: false,
       showProducts: false,
+      articulosComprados: false,
       seeProduct: false,
       seeEditProduct: false,
       require: false,
@@ -188,7 +203,8 @@ export default {
       subtipo:"",
       descripcion:"",
       imagen:"", 
-      imagenProducto:""
+      imagenProducto:"",
+      imagenArticulo:""
     };
   },
   methods: {
@@ -284,6 +300,9 @@ export default {
       this.showEdit = true;
     }, 
 // CREAR NUEVO PRODUCTO
+    handleFileUploadArticulo() {
+      this.imagenArticulo = this.$refs.imagenArticulo.files[0]
+    },
     createProduct(){
       this.validatingProduct();
       const self = this;
@@ -296,7 +315,7 @@ export default {
           precio: self.precio,
           tipo: self.tipo,
           subtipo: self.subtipo,
-          imagen: self.imagen
+          imagen: self.imagenArticulo
         })
         .then(function(response) {
           Swal.fire({
@@ -306,7 +325,7 @@ export default {
           self.seeProduct = false;
         })
         .catch(function(error) {
-          console.error(error);
+          console.error(error.response.data.message);
         });
     },
     validatingProduct() {
@@ -409,10 +428,32 @@ export default {
       });
     },
 // MOSTRAR ARTICULOS ADQUIRIDOS
+    getBuyProduts(){
+      const self = this;
+      const data = localStorage.getItem("id");
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;    
+        axios
+          .get("http://localhost:3000/user/products/acquired/:id" + data)
+          .then(function(response) {
+          self.articulosComprados = true;
+          self.articulosAdquiridos = response.data.data.map((articuloAdquirido) => {
+            articuloAdquirido.imagen = "http://localhost:3000/uploads/" + articuloAdquirido.imagen;
+            return articuloAdquirido
+          });
+          })
+          .catch(function(error) {
+            console.error(error.response.data.message)
+          });
+       },
+      showBuyProducts(){
+        this.articulosComprados = !this.articulosComprados;
+    }
   },
   created() {
     this.getUserData();
     this.getUserProducts();
+    this.getBuyProduts();
   },
 };
 </script>

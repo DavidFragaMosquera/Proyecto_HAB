@@ -19,6 +19,7 @@ const { loginUser } = require('./controllers/user/login');
 const { getAllUsers } = require('./controllers/user/get_all_users');
 const { getUser } = require('./controllers/user/get_data_user');
 const { getUserProducts} = require('./controllers/user/get_user_products');
+const { getAcquiredProducts } = require('./controllers/user/get_acquired_products')
 const { editUser } = require('./controllers/user/edit_user');
 const { editPassword} = require ('./controllers/user/edit_password');
 const { disableUser } = require ('./controllers/user/disable_user');
@@ -55,6 +56,7 @@ app.post('/user/logIn', loginUser); //Login usuario
 app.get('/users', getAllUsers); // Listar todos los usuarios (publico)
 app.get('/user/:id', getUser); // Listar usuario individual (publico)
 app.get('/user/products/:id', getUserProducts); // Listar productos de un usuario (publico)
+app.get('/user/products/acquired/:id', userIsAuthenticated, getAcquiredProducts) // Listar productos adquiridos por un usuario (privado)
 app.put('/user/:id', userIsAuthenticated, editUser); // Editar usuario (Solo registrados)
 app.put('/user/password/:id', userIsAuthenticated, editPassword); // Editar contraseña (Solo registrados)
 app.put('/user/disable/:id', userIsAuthenticated, disableUser); // Deshabilitar usuario (Solo registrados)

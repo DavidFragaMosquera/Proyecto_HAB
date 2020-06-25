@@ -11,7 +11,7 @@
         placeholder="Busca tu articulo 🔍"
       />
     </div> -->
-<!--       <div class="articulo" v-show="verArticulos">
+    <div class="articulo" v-show="verArticulos">
          <h3>
           {{articulo.nombre_articulo}}
         </h3>
@@ -27,22 +27,28 @@
 
         <button @click="openModal()">Comprar</button>
         <br>
-        <div v-show="modal" class="modal">
+        <!-- <button @click="verArticuloEvent">Volver</button> -->
+          <div v-show="modal" class="modal">
           <div class="modalBox">
+            <form>
             <h3>Rellena los datos para finalizar tu compra, gracias</h3>
-              <form class="compra" >
                  <label for="fecha_inicio"> Fecha Inicio:</label>
-                 <input type="date" id="fecha_inicio" name="fecha_inicio" min="2020-06-06" max="2022-06-06" />
+                 <input type="date" id="fecha_inicio" name="fecha_inicio" v-model="datosCompra.fecha_inicio" />
 
-                 <label for="fecha_fin"> Fecha Inicio:</label>
-                 <input type="date" id="fecha_fin" name="fecha_fin" min="2020-06-06" max="2022-06-06" />
-              </form>
-            <button @click="buyProduct()">Comprar</button>
+                 <label for="fecha_fin"> Fecha Fin:</label>
+                 <input type="date" id="fecha_fin" name="fecha_fin" v-model="datosCompra.fecha_fin" />
+
+                 <label for="direccion"> Direccción:</label>
+                 <input type="text" id="direccion" name="direccion" v-model="datosCompra.direccion" />
+
+                 </form>
+                  <button @click="buyProductEvent(articulo)">Comprar</button>
+                 <button @click="closeModal()">Volver</button>
           </div>
         </div>
         <br>
-        <button @click="verArticuloEvent">Volver</button> -->
-      
+        <button @click="verArticuloEvent">Volver</button>
+      </div>
     <div class="articulos"
           v-show="!verArticulos">  
           <h2>Todos los articulos</h2>
@@ -81,9 +87,11 @@
 <script>
 import Swal from "sweetalert2";
 import VModal from "vue-js-modal";
+import formatDateToDB from "@/aux/helpers.js"
 
 export default {
-name: 'listaproductos',
+name: 'listaproductos', 
+
 props:{
     articulos: Array,
     articulo: Object,
@@ -91,9 +99,16 @@ props:{
     alquileres: Array,
     verArticulos: Boolean,
     id: Number,
-    comprar: Array,
-    modal: false
-}, 
+    comprar: Array, 
+    datosCompra: Object 
+},
+
+data(){
+  return {
+    modal:false
+  }
+},
+
 methods: {
   mostrarArticuloEvent(index) {  
       let data = this.articulos[index].id;
@@ -115,12 +130,12 @@ methods: {
 
   },
   closeModal(){
-this.modal=false
+    this.modal = false;
 
 },
-  buyProduct() {
-    let comprar = this.articulo.id;
-    this.$emit("comprar");
+  buyProductEvent(articulo) {
+    let data = articulo.id
+    this.$emit("comprar", data);
   }
 }
 }
@@ -147,17 +162,6 @@ this.modal=false
     },
 }, */
 /* 
-computed: {
-  buy(){
-
-  this.$emit(comprar)
-  Swal.fire({
-    title: 'Articulo comprado',
-    text:`Recibirás un mail con tu compra`,
-    confirmButtonText: "Continuar comprando",
-  });
-},
-} 
 };*/
 
 
@@ -177,10 +181,10 @@ width: 100%;
 }
 
 .modalbox {
-background: #fefefe;
+background: black;
 margin: 15% auto;
 padding: 20px;
-border: 1px solid #888;
+border: 1px solid black;
 width: 80%;
 }
 </style>

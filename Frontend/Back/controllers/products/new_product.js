@@ -17,7 +17,7 @@ async function newProduct(req, res, next) {
       precio,
       tipo,
       subtipo,
-      fecha_inicio     
+      fecha_inicio   
       } = req.body;
 
       const [
@@ -27,7 +27,7 @@ async function newProduct(req, res, next) {
         [id]
       );
 
-      let savedFileName;
+  let savedFileName;
 
     if (req.files && req.files.imagen) {
       try {

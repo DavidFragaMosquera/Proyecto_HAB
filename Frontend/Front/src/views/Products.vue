@@ -10,7 +10,8 @@
         :verArticulos="verArticulos"
         v-on:go="mostrarArticulo"
         v-on:verArticulo="verArticulo"
-        :comprar="comprar"
+        v-on:comprar="comprar"
+        :datosCompra="datosCompra"     
         >
         </listaproductos>
 
@@ -22,6 +23,8 @@
 import axios from "axios";
 import vueHeadful from "vue-headful";
 import listaproductos from "@/components/ShowProducts.vue";
+import formatDateToDB from "@/aux/helpers.js"
+import Swal from "sweetalert2";
 
 export default {  
   name: "articulos",
@@ -36,7 +39,8 @@ export default {
       cesiones: [],
       alquileres: [],
       verArticulos: false,
-      comprar: []
+      datosCompra: {},
+      correctData: false
     };
   },
   methods: {
@@ -108,19 +112,21 @@ export default {
       this.verArticulos=false;
     },
 // FUNCION PARA COMPRAR UN PRODUCTO
-/*       buyProduct() {
+      comprar(data) {
         this.validateBuy();
-        let data = articulo.id
         const self = this;
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        console.log(self.correctData)
+          if (self.correctData === true){
         axios
         .post("http://localhost:3000/products/pedido/" + data, {
-          direccion: self.direccion,
-          fecha_inicio: self.fecha_inicio,
-          fecha_fin: self.fecha_fin
+          direccion: self.datosCompra.direccion,
+          fecha_inicio: self.datosCompra.fecha_inicio,
+          fecha_fin: self.datosCompra.fecha_fin
     })
     .then(function(response){
+      console.log(response)
         Swal.fire({
             icon: "success",
             title: "Articulo comprado con exito",
@@ -132,31 +138,37 @@ export default {
     .catch(function(error){
       console.error(error.response.data.message)
     });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Faltan datos por cubrir',
+        timer: 3000
+      })
+    }
   },
     validateBuy() {
       if (
-        this.direccion === "" ||
-        this.fecha_inicio === "" ||
-        this.fecha_fin === ""
+        this.datosCompra.direccion === "" ||
+        this.datosCompra.fecha_inicio === "" ||
+        this.datosCompra.fecha_fin === ""
       ) {
         this.correctData = false;
-        this.require = true;
       } else {
         this.correctData = true;
-        this.correctData = false;
       }
     },
     emptyBuy() {
-      this.direccion = "";
-      this.fecha_inicio = "";
-      this.fecha_fin ="";
-  } */
+      this.datosCompra.direccion = "";
+      this.datosCompra.fecha_inicio = "";
+      this.datosCompra.fecha_fin ="";
+  }
   },
   created() {
     this.showProducts();
     this.showCesion();
     this.showRent();
-   /*  this.buyProduct(); */
+    /* this.comprar();  */
   },
 
 };
