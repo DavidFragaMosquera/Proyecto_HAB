@@ -27,15 +27,34 @@
 <!-- LISTADO ARTICULOS ADQUIRIDOS -->
         <div class="boughtProducts" v-show="!articulosComprados">
           <h3>Articulos adquiridos</h3>
-          <ul v-for="articuloAdquirido in articulosAdquiridos" :key="articuloAdquirido">
+          <ul v-for="articuloAdquirido in articulosAdquiridos" :key="articuloAdquirido.id">
             <li><img :src="articuloAdquirido.imagen" alt="imagen articulo"></li>
             <li>{{ articuloAdquirido.nombre_articulo }}</li>
-            <li>{{ articuloAdquirido.precio }}</li>
-            <li>{{ articuloAdquirido.direccion }}</li>
-            <li>Fecha Inicio: {{ articuloAdquirido.fecha_inicio }}</li>
-            <li>Fecha Finalización: {{ articuloAdquirido.fecha_fin }}</li>
+            <li>Precio: {{ articuloAdquirido.precio }}</li>
+            <li> Dirección de envio: {{ articuloAdquirido.direccion }}</li>
+            <li>Fecha Inicio: {{ articuloAdquirido.fecha_inicio | moment(" DD-MM-YYYY" )}}</li>
+            <li>Fecha Finalización: {{ articuloAdquirido.fecha_fin | moment(" DD-MM-YYYY" ) }}</li>
             <li>Pedido nº: {{ articuloAdquirido.id }}</li>
-            <button @click="ratingProduct(articuloAdquirido)">Valorar</button>
+            <button @click="openModal(articuloAdquirido)">Valorar</button>
+              <div v-show="modal" class="modal">
+                <div class="modalBox">
+                    <h3>Puedes valorar tu producto para ayudar a otros usuarios. Gracias por tu tiempo</h3>
+                    <star-rating
+                      @rating-selected="rating = $event"
+                      :rating="rating"
+                      v-bind:star-size="33">
+                    </star-rating>
+                    <textarea
+                      v-model="comentario"
+                      name="commentario"
+                      id="commentario"
+                      cols="66"
+                      rows="6">                     
+                    </textarea>
+                    <button @click="ratingProduct(articuloAdquirido, rating, comentario)">Valorar producto</button>
+                    <button @click="closeModal()">Volver</button>
+                </div>
+              </div>
           </ul>
         </div>
 <!-- NUEVO ARTICULO -->
@@ -170,15 +189,17 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import VModal from "vue-js-modal"
+import StarRating from "vue-star-rating";
 
 export default {
   name: "Profile",
-  components: { },
+  components: { StarRating },
   data() {
     return {
       id: null,
       userData: {},
       articulos:[],
+      articulosAdquiridos:[],
       showEdit: false,
       showProducts: false,
       articulosComprados: false,
@@ -204,7 +225,9 @@ export default {
       descripcion:"",
       imagen:"", 
       imagenProducto:"",
-      imagenArticulo:""
+      imagenArticulo:"",
+      rating: 0,
+      comentario:""
     };
   },
   methods: {
@@ -428,13 +451,13 @@ export default {
       });
     },
 // MOSTRAR ARTICULOS ADQUIRIDOS
-    getBuyProduts(){
+    getBuyProducts(){
       const self = this;
       const data = localStorage.getItem("id");
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;    
         axios
-          .get("http://localhost:3000/user/products/acquired/:id" + data)
+          .get("http://localhost:3000/user/products/acquired/" + data)
           .then(function(response) {
           self.articulosComprados = true;
           self.articulosAdquiridos = response.data.data.map((articuloAdquirido) => {
@@ -448,16 +471,74 @@ export default {
        },
       showBuyProducts(){
         this.articulosComprados = !this.articulosComprados;
+    },
+// VALORAR PRODUCTO ADQUIRIDO
+    ratingProduct(articuloAdquirido, rating, comentario) {
+      self = this;
+      const id = articuloAdquirido.id;
+      const token = localStorage.getItem("token");
+      const data = localStorage.getItem("id");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios
+      .post("http://localhost:3000/pedidos/rating/" + id, {
+        valoracion: rating,
+        comentario: comentario
+      })
+      .then(function(response) {
+        console.log(response);
+        Swal.fire({
+            icon: "success",
+            title: "Articulo valorado correctamente",
+            timer: "4000"
+        });
+          location.reload();
+      })
+      .catch(function(error){
+        console.error(error.response.data.message);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ya has valorado el producto y solo puedes hacerlo una vez',
+            timer: 3000
+        });
+      })
+    },
+    openModal() {
+      this.modal = true;
+    },
+    closeModal() {
+      this.modal = false;
     }
   },
   created() {
     this.getUserData();
     this.getUserProducts();
-    this.getBuyProduts();
+    this.getBuyProducts();
   },
 };
 </script>
 
 <style scoped>
-
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 150px;  
+  width: 100%;
+}
+.modalbox {
+  background: black;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 50px;
+  border: solid 2px black;
+ /*  box-shadow: 0 0 1px rgb(12, 12, 12); */
+}
 </style>
