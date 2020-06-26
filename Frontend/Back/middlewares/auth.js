@@ -10,7 +10,7 @@ async function userIsAuthenticated(req, res, next) {
   try {
     // Check if the authorization header is valid
     const { authorization } = req.headers;
-
+ 
     if (!authorization) {
       throw generateError('Falta la cabecera de Authorization');
     }

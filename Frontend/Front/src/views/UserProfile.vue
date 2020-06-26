@@ -14,7 +14,7 @@
           <li> Descripcion: {{ userData.descripcion }}</li>
           <li> Nombre: {{ userData.nombre }}</li>
           <li> Apellidos: {{ userData.apellidos }}</li>
-          <li> Fecha de nacimiento: {{ userData.fecha_nacimiento }}</li>
+          <li> Fecha de nacimiento: {{ userData.fecha_nacimiento | moment(" DD-MM-YYYY" ) }}</li>
           <li> Email: {{ userData.mail }}</li>
           <li> Telefono: {{ userData.telefono }}</li>
           <li> Direccion: {{ userData.direccion }}</li>
@@ -24,6 +24,31 @@
         <button @click="showNewProduct()">Nuevo articulo</button>
         <button @click="showMyProducts()">Mis productos</button>
         <button @click="showBuyProducts()">Productos adquiridos</button>
+        <button @click="showEditPassword()">Cambiar contraseña</button>
+        <button @click="deleteUser()">Eliminar cuenta</button>
+<!-- CAMBIAR CONTRASEÑA -->
+    <div class="password" v-show="seeEditPassword">
+        <h3 class="editPassword">CAMBIAR CONTRASEÑA</h3>
+        <p>Antigua contraseña</p>
+        <input
+          type="password"
+          v-model="oldPassword"
+          placeholder="Contraseña anterior"/>
+        <br>
+        <p>Nueva contraseña</p>
+        <input type="password"
+               v-model="password" 
+              placeholder="Nueva contraseña" />
+        <br>
+        <p>Repite la nueva contraseña</p>
+        <input
+          type="password"
+          v-model="passwordRepeat"
+          placeholder="Repeat your new Paswword"/>
+        <br>
+        <button @click="editPassword()">Editar</button>
+        <button @click="seeEditPassword = false">Volver</button>
+    </div>
 <!-- LISTADO ARTICULOS ADQUIRIDOS -->
         <div class="boughtProducts" v-show="!articulosComprados">
           <h3>Articulos adquiridos</h3>
@@ -205,6 +230,7 @@ export default {
       articulosComprados: false,
       seeProduct: false,
       seeEditProduct: false,
+      seeEditPassword: false,
       require: false,
       modal: false,
       newDescripcion: "",
@@ -227,7 +253,10 @@ export default {
       imagenProducto:"",
       imagenArticulo:"",
       rating: 0,
-      comentario:""
+      comentario:"",
+      oldPassword: "",
+      password: "",
+      passwordRepeat: "",
     };
   },
   methods: {
@@ -301,8 +330,8 @@ export default {
         })
         .then(function(response) {
           self.showEdit = true;
-                    Swal.fire({
-            icon: "sucess",
+          Swal.fire({
+            icon: "success",
             title: "Usuario editado correctamente, gracias!",
             timer: "3000"
           });
@@ -322,6 +351,48 @@ export default {
       this.newDireccion = this.userData.direccion;
       this.showEdit = true;
     }, 
+// CAMBIAR CONTRASEÑA
+    editPassword() {
+      const self = this;
+      const data = localStorage.getItem("id");
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios
+        .put("http://localhost:3000/user/password/" + data, {
+          oldPassword: self.oldPassword,
+          newPassword: self.password,
+          newPasswordRepeat: self.passwordRepeat,
+        })
+        .then(function(response) {
+          console.log(response)
+          Swal.fire({
+            icon: "success",
+            title: "Contraseña cambiada con exito!",
+            timer: "3000"
+          });
+          self.emptyPassword();
+          self.seeEditPassword = true;
+        })
+        .catch(function(error) {
+          console.error(error.response.data.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Puede que tu contraseña antigua no sea la correcta o que no coincidan las contraseñas',
+            timer: 3333
+          });
+        });
+    },
+    showEditPassword() {
+      this.seeEditPassword = true;
+      this.password = "";
+      this.passwordRepeat = "";
+    },
+    emptyPassword() {
+      this.oldPassword = "";
+      this.newPassword = "";
+      this.newPasswordRepeat = "";
+    },
 // CREAR NUEVO PRODUCTO
     handleFileUploadArticulo() {
       this.imagenArticulo = this.$refs.imagenArticulo.files[0]
@@ -342,7 +413,9 @@ export default {
         })
         .then(function(response) {
           Swal.fire({
-            title: "Tu articulo se ha subido con exito. Gracias"
+            icon: "success",
+            title: "Articulo creado con exito, gracias!",
+            timer: "3000"
           });
           self.emptyProduct();
           self.seeProduct = false;
@@ -508,7 +581,42 @@ export default {
     },
     closeModal() {
       this.modal = false;
-    }
+    },
+// ELIMINAR CUENTA
+  deleteUser() {
+      const self = this;
+      const data = localStorage.getItem("id");
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      Swal.fire({
+        icon: "warning",
+        title: "¿Eliminar cuenta?",
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: "Si, borrar cuenta",
+      }).then((result) => {
+        if (result.value) {
+          axios
+            .put("http://localhost:3000/user/disable/" + data)
+            .then(function(response) {
+              localStorage.removeItem("token");
+              localStorage.removeItem("login");
+              localStorage.removeItem("id");
+              axios.defaults.headers.common["Authorization"] = "";
+              self.$router.push("/");
+            })
+            .catch(function(error) {
+              console.error(error.response.data.message);
+            });
+          Swal.fire({
+            title: "Cuenta eliminada",
+            text: "No te preocupes, podrás reactivarla siempre que quieras",
+            timer: "3333"
+          })
+        }
+      });
+    },
+
   },
   created() {
     this.getUserData();

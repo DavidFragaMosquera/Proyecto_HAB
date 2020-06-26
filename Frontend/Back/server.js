@@ -57,11 +57,11 @@ app.get('/users', getAllUsers); // Listar todos los usuarios (publico)
 app.get('/user/:id', getUser); // Listar usuario individual (publico)
 app.get('/user/products/:id', getUserProducts); // Listar productos de un usuario (publico)
 app.get('/user/products/acquired/:id', userIsAuthenticated, getAcquiredProducts) // Listar productos adquiridos por un usuario (privado)
+app.put('/user/recovery', recoveryPassword) // Recuperar contraseña
+app.put('/user/reactivate', reactivateUser);  // Reactivar usuario 
+app.put('/user/disable/:id', userIsAuthenticated, disableUser); // Deshabilitar usuario (Solo registrados)
 app.put('/user/:id', userIsAuthenticated, editUser); // Editar usuario (Solo registrados)
 app.put('/user/password/:id', userIsAuthenticated, editPassword); // Editar contraseña (Solo registrados)
-app.put('/user/disable/:id', userIsAuthenticated, disableUser); // Deshabilitar usuario (Solo registrados)
-app.put('/user/reactivate/:id', reactivateUser);  // Reactivar usuario (Solo registrados)
-app.put('/user/recovery/:id', recoveryPassword) // Recuperar contraseña (Solo registrados)
 app.delete('/user/:id', userIsAuthenticated, deleteUser); // Borrar usuario (Solo registrados)
 
 // RUTAS PRODUCTOS

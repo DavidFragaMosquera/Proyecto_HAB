@@ -45,12 +45,12 @@ async function editPassword(req, res, next) {
       throw generateError(`El usuario con el id ${id} no existe`, 404);
     }
 
-    if (current[0].id_usuario !== req.auth.id ) {
+/*     if (current[0].id_usuario !== req.auth.id ) {
       throw generateError(
         'No tienes permiso para editar contraseña si no te autentificas',
         401
       );
-    }
+    } */
 
     const [dbUser] = currentUser;
 

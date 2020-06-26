@@ -9,6 +9,7 @@ const { recoveryPasswordSchema} = require('../../validations/reactivate_user');
 const bcrypt = require('bcrypt');
 
 async function recoveryPassword(req, res, next) {
+
     let connection;
     
     try {
