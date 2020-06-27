@@ -39,6 +39,7 @@ const { getRatingProducts } = require('./controllers/products/get_rating_product
 const { buyProduct } = require('./controllers/products/buy_product');
 const { ratingProduct } = require('./controllers/products/rating_product'); 
 const { availabilityProduct } = require('./controllers/products/availability_product');
+const { search } = require('./controllers/products/searching');
 const { searchProduct } = require('./controllers/products/search_product');
 const { searchPrice } = require('./controllers/products/search_price');
 
@@ -78,6 +79,7 @@ app.post('/pedidos/rating/:id', userIsAuthenticated, ratingProduct); // Valoraci
 app.get('/search/availability', availabilityProduct); // Buscar disponibilidad de producto, ordenado por fecha de la misma (publico)
 app.get('/search', searchProduct); // Busqueda general por palabras
 app.get('/search/price', searchPrice); // Busqueda por precio
+app.get('/searching', search) // Buscador top
 
 
 // Error middleware

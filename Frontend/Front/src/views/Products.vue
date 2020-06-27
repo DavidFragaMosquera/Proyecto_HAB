@@ -2,6 +2,17 @@
   <div class="articulos">
     <vue-headful title="Articulos" />
     <div>
+      <div class="buscador">
+      <label for="bySearch">🔍 Busca articulos por nombre, categoria o precio</label>
+      <br>
+      <input
+        v-model="search"
+        id="search"
+        name="bySearch"
+        type="search"
+        placeholder="Busca tu articulo "
+        size="33"/>
+    </div>
       <listaproductos 
         :articulos="articulos"
         :articulo="articulo" 
@@ -40,7 +51,8 @@ export default {
       alquileres: [],
       verArticulos: false,
       datosCompra: {},
-      correctData: false
+      correctData: false,
+      search: ""
     };
   },
   methods: {
@@ -99,7 +111,6 @@ export default {
       axios
         .get("http://localhost:3000/product/" + data)
         .then(function(response) {
-          console.log(response)
           self.articulo = response.data.data
           self.articulo.imagen = "http://localhost:3000/uploads/" + self.articulo.imagen;
           self.verArticulos = true;
@@ -126,7 +137,6 @@ export default {
           fecha_fin: self.datosCompra.fecha_fin
     })
     .then(function(response){
-      console.log(response)
         Swal.fire({
             icon: "success",
             title: "Articulo comprado con exito",
@@ -168,8 +178,21 @@ export default {
     this.showProducts();
     this.showCesion();
     this.showRent();
-    /* this.comprar();  */
-  },
 
+  },
+  computed: {
+    filteredProducts() {
+      if(!this.search) {
+        return this.articulos;
+      }
+      return this.articulos.filter(
+        (articulo) =>
+          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
+          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
+          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) ||
+          articulo.precio.toLowerCase().includes(this.search.toLowerCase()) 
+      );
+    },
+  },
 };
 </script>

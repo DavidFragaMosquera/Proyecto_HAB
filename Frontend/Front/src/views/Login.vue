@@ -8,7 +8,7 @@
         <form>
           <input type="text" placeholder="Nombre de usuario" v-model="login" />
           <br />
-          <input type="password" placeholder="password" v-model="password" />
+          <input type="password" placeholder="Contraseña" v-model="password" />
           <br />
         </form>
           <button @click="Login(login, password)">Login</button>
@@ -32,13 +32,14 @@
 <!-- REACTIVAR USUARIO ELIMINADO -->
     <br>
     <h5>¿Has eliminado tu cuenta y quieres recuperarla?</h5>
-    <button @click="showReactivate()">Recupera tu cuenta</button>
+    <button @click="showReactivate()">Reactiva tu cuenta</button>
     <div class="ReactivarUsuario" v-show="seeReactivate">
       <h3>Reactivar tu cuenta</h3>
       <input type="text" placeholder="Nombre de usuario" v-model="loginRecover">
       <br>
       <input type="password" placeholder="Contraseña" v-model="passwordRecover">
-      <button @click="reactivate()">Recuperar cuenta</button>
+      <br>
+      <button @click="reactivate()">Reactivar cuenta</button>
       <button @click="seeReactivate = false">Volver</button>
     </div>
   </div>

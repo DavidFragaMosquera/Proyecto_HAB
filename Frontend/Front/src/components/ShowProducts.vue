@@ -1,15 +1,15 @@
 <template>
   <div class="todo">
-<!--     <div>
-      <label for="bySearch">Búsqueda</label>
-      <br />
+    <!-- <div class="buscador">
+      <label for="bySearch">🔍 Busca articulos por nombre, categoria o precio</label>
+      <br>
       <input
         v-model="search"
         id="search"
         name="bySearch"
         type="search"
-        placeholder="Busca tu articulo 🔍"
-      />
+        placeholder="Busca tu articulo "
+        size="33"/>
     </div> -->
     <div class="articulo" v-show="verArticulos">
          <h3>
@@ -22,6 +22,9 @@
         </p>
         <p> Precio: 
           {{articulo.precio}}€
+        </p>
+        <p>
+          Disponible {{articulo.fecha_fin | moment(" DD-MM-YYYY")}}
         </p>
         <br>
 
@@ -100,14 +103,31 @@ props:{
     verArticulos: Boolean,
     id: Number,
     comprar: Array, 
-    datosCompra: Object 
+    datosCompra: Object, 
+    
 },
 
 data(){
   return {
-    modal:false
+    modal:false,
+    /* search: "" */
   }
 },
+//BUSCADOR
+/*   computed: {
+    filteredProducts() {
+      if(!this.search) {
+        return this.articulos;
+      }
+      return this.articulos.filter(
+        (articulo) =>
+          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
+          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
+          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) ||
+          articulo.precio.toLowerCase().includes(this.search.toLowerCase()) 
+      );
+    },
+  }, */
 
 methods: {
   mostrarArticuloEvent(index) {  
@@ -139,32 +159,6 @@ methods: {
   }
 }
 }
-
-
-/*data(){
-   return {
-    search:"",
-} */
-// },
-/* computed: {
-    filteredProducts() {
-      if (!this.search) {
-        return this.articulos;
-      }
-      return this.articulos.filter(
-        (articulo) =>
-          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
-          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) 
-  this.$router.push("/user/logIn");
-
-      )
-    },
-}, */
-/* 
-};*/
-
-
 </script>
 
 <style scoped>
