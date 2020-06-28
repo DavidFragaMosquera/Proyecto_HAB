@@ -1,5 +1,7 @@
 <template>
+
   <div id="nav">
+      <h1>P  I  C  S  F  Y</h1>
       <p><router-link :to="{ name:'Home'}"> Home</router-link></p>
       <p><router-link :to="{ name:'Login'}"> Login </router-link></p>
       <p><router-link :to="{ name:'Products'}">Productos</router-link></p>
@@ -28,21 +30,31 @@ export default {
 </script>
 
 <style scoped>
-#nav{
-  
+#nav{ 
   display: flex;
   text-decoration: none;
-  justify-content: center;
-  text-decoration: none;
-  background: white;
+  justify-content: flex-end;
+  background: rgba(47, 6, 47, 0.253);
   font-weight: bold;
+  border-radius: 13px;
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+
 }
 #nav p{
   padding: 0.75rem; 
-  border-right: 1.5px solid rgb(0, 0, 0);
+  border-right: 1.5px solid #fff;
   text-decoration: none;
   color: black;
 }
+
+#nav h1{
+  align-items: flex-start;
+  padding-right: 50rem;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-left: -1.5rem;
+}
+
 #nav p:last-child /* ,regist */{
   border-right: none;
 }
@@ -53,10 +65,11 @@ button{
   font-size: 1rem;
   font-weight: bold;
   color: red;
-  background: white;
+  background: rgba(47, 6, 47, 0.253);
+;
 }
 .regist{
   border-right: none;
-  color: black;
+  color: rgb(48, 175, 97);
 }
 </style>

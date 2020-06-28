@@ -49,7 +49,7 @@
         v-model="mail"
       />
       <br />
-           <label for="fecha_nacimiento">Fecha nacimiento:</label>
+           <label for="fecha_nacimiento">Fecha de nacimiento</label>
       <input
         type="date"
         name="fecha_nacimiento"
@@ -155,20 +155,14 @@ p {
 }
 form {
   padding: 1rem;
-  color: orange;
+  color: rgb(48, 175, 97);
   display: flex;
   align-items: center;
   border-radius: 20px;
   flex-direction: column;
   font-weight: bold;
   border-bottom: 1px solid white;
-}
-button{
-  color: white;
-  background: orange;
-  padding: 1rem 2.5rem;
-  font-weight: bold;
-  font-size: 1.25rem;
-  border-radius: 20px;
+/*   background-image: url('../assets/atardecer.jpg');
+  background-size: 100% 100%; */
 }
 </style>

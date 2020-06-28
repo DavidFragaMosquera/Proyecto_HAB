@@ -3,29 +3,38 @@
 <!-- CABECERA -->
     <vue-headful title="PerfilUsuario"/>
       <div>
+        <div class="cab">
+       <h2>Bienvenido,  {{ userData.login }}!</h2>
+       </div>
       <div class="welcome">
-       <h2>Bienvenido, {{ userData.login }}</h2>
-       <h3>Este es tu area personal donde puedes editar tus datos, subir nuevos productos y ver los que ya has adquirido</h3>
-        <img :src="userData.imagen" alt="foto perfil usuario" />
+       <h3>Este es tu area personal donde puedes: </h3>
+       <h4>✔️  Editar tus datos</h4>
+       <h4>✔️  Subir nuevos productos para vender o alquilar</h4>
+       <h4>✔️  Ver los productos que has adquirido</h4>
+       <h4>✔️  Cambiar tu contraseña</h4>
+       <h4>✔️  Eliminar tu cuenta</h4>       
+        <img class="imgPerfil" :src="userData.imagen" alt="foto perfil usuario" />
       </div>
 <!-- LISTADO DATOS DE USUARIO -->
       <div v-show="!showEdit">
         <ul class="datosperfil">
-          <li> Descripcion: {{ userData.descripcion }}</li>
-          <li> Nombre: {{ userData.nombre }}</li>
-          <li> Apellidos: {{ userData.apellidos }}</li>
-          <li> Fecha de nacimiento: {{ userData.fecha_nacimiento | moment(" DD-MM-YYYY" ) }}</li>
-          <li> Email: {{ userData.mail }}</li>
-          <li> Telefono: {{ userData.telefono }}</li>
-          <li> Direccion: {{ userData.direccion }}</li>
+          <li> {{ userData.nombre }} {{ userData.apellidos }}</li>
+          <li> {{ userData.fecha_nacimiento | moment(" DD-MM-YYYY" ) }}</li>
+          <li>{{ userData.mail }}</li>
+          <li>  {{ userData.telefono }}</li>
+          <li>  {{ userData.direccion }}</li>
+          <li> Bio: {{ userData.descripcion }}</li>
+
         </ul>
 <!-- BOTONES -->
+      <div class="botonera">
         <button @click="showEditProfile()">Editar perfil</button>
         <button @click="showNewProduct()">Nuevo articulo</button>
         <button @click="showMyProducts()">Mis productos</button>
         <button @click="showBuyProducts()">Productos adquiridos</button>
         <button @click="showEditPassword()">Cambiar contraseña</button>
         <button @click="deleteUser()">Eliminar cuenta</button>
+      </div>
 <!-- CAMBIAR CONTRASEÑA -->
     <div class="password" v-show="seeEditPassword">
         <h3 class="editPassword">CAMBIAR CONTRASEÑA</h3>
@@ -136,9 +145,12 @@
             <br>
             <li>
             <label for="descripcion">Descripción</label>
+            <br>
             <textarea 
             name="descripcion"
             id="descripcion"
+            cols="20" 
+            rows="10"
             v-model="descripcion">
             </textarea>
             </li>
@@ -182,23 +194,41 @@
       </div>
     </div>
 <!-- EDICION DATOS USUARIO -->
-    <div class="edit" v-show="showEdit">
+    <div class="editUs" v-show="showEdit">
       <h3>Editar usuario</h3>
-      <input type="text" v-model="newDescripcion" placeholder="Biografia"/>
+      <!-- <label for="biografia">Biografia</label> 
+      <input type="text" v-model="newDescripcion" placeholder="Biografia" /> -->
+      <label for="imagen">Cambiar foto de perfil</label>
+      <br>
+      <input type="file" id="imagen" ref="imagen" @change="handleFileUpload()" />
+      <br>
+      <label for="nombre">Nombre</label>
       <br>
       <input type="text" v-model="newNombre" placeholder="Nombre"/>
       <br>
+      <label for="apellidos">Apellidos</label>
+      <br>
       <input type="text" v-model="newApellidos" placeholder="Apellidos"/>
+      <br>
+      <label for="fecha_nacimiento">Fecha de nacimiento</label>
       <br>
       <input type="date" v-model="newFechaNacimiento"/>
       <br>
+      <label for="mail">e-mail</label>
+      <br>
       <input type="text" v-model="newMail" placeholder="Email"/>
+      <br>
+      <label for="telefono">Telefono</label>
       <br>
       <input type="text" v-model="newTelefono" placeholder="Telefono"/>
       <br>
+      <label for="direccion">Dirección</label>
+      <br>
       <input type="text" v-model="newDireccion" placeholder="Dirección"/>
       <br>
-      <input type="file" id="imagen" ref="imagen" @change="handleFileUpload()" />
+      <label for="">Biografia</label> <br>
+      <textarea v-model="newDescripcion" placeholder="Biografia" rows="10"> </textarea>
+      <br>
       <br>
       <button @click="editUser()">Modificar</button>
       <br>
@@ -627,6 +657,7 @@ export default {
 </script>
 
 <style scoped>
+
 .modal {
   position: fixed;
   top: 0;
@@ -649,4 +680,82 @@ export default {
   border: solid 2px black;
  /*  box-shadow: 0 0 1px rgb(12, 12, 12); */
 }
+.botonera {
+  padding-top: 3rem;
+  
+}
+.botonera button{
+  margin: 1rem;
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.imgPerfil {
+  border-radius: 50%;
+  margin-top: -16rem;
+  margin-left: 73rem;
+  transition: transform .9s ease;
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+.imgPerfil:hover {
+  transform: scale(1.1);
+  border-radius: 50%;
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+}
+.datosperfil{
+  background: rgba(47, 6, 47, 0.253);
+  padding-top: 120px;
+  padding-right: 350px;
+  text-align: right;
+  padding-bottom: 70px;
+  margin-top: -350px;
+  margin-right: 13%;
+  border-radius: 9px;
+  font-size: 1.5rem;
+  box-shadow: 0px 8px 6px -6px rgba(65, 78, 88, 0.685); 
+}
+.datosperfil li:first-child{
+  color: rgb(48, 175, 97);
+  font-weight: bold;
+}
+
+.welcome {
+  text-align: left;
+  margin-left: 10%;
+}
+
+ h2{
+  color: rgb(48, 175, 97);
+  text-align: left;
+  margin-left: 6rem;  
+}
+/* .editUs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: 20%;
+} */
+.editUs input{
+  margin-bottom: 1rem;
+}
+.editUs h3{
+    color: rgb(48, 175, 97);
+    text-decoration: underline;
+}
+.editUserImage button{
+  background: rgba(0, 0, 0, 0.219);
+}
+
 </style>
