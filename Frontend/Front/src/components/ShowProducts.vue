@@ -36,17 +36,20 @@
             <form>
             <h3>Rellena los datos para finalizar tu compra, gracias</h3>
                  <label for="fecha_inicio"> Fecha Inicio:</label>
+                 <br>
                  <input type="date" id="fecha_inicio" name="fecha_inicio" v-model="datosCompra.fecha_inicio" />
-
+                 <br>
                  <label for="fecha_fin"> Fecha Fin:</label>
+                 <br>
                  <input type="date" id="fecha_fin" name="fecha_fin" v-model="datosCompra.fecha_fin" />
-
+                 <br>
                  <label for="direccion"> Direccción:</label>
+                 <br>
                  <input type="text" id="direccion" name="direccion" v-model="datosCompra.direccion" />
-
+                 <br>
                  </form>
                   <button @click="buyProductEvent(articulo)">Comprar</button>
-                 <button @click="closeModal()">Volver</button>
+                 <button class="voltar" @click="closeModal()">Volver</button>
           </div>
         </div>
         <br>
@@ -167,7 +170,7 @@ display: inline-block;
 }
 .modal {
 position: fixed;
-top: 0;
+top: 5;
 left: 0;
 bottom: 0;
 background: rgba(0, 0, 0, 0.5);
@@ -181,4 +184,43 @@ padding: 20px;
 border: 1px solid black;
 width: 80%;
 }
+
+/* .modalbox button .voltar{
+ margin-left: 2rem;
+} */
+
+img {
+  position: relative;
+  display: block;
+  margin-left: 1rem;
+  /* flex: 1 1 0px; */
+  transition: transform 700ms;
+}
+
+/* div:focus-within img,
+div:hover img {
+  transform: translateX(-5%);
+}
+
+img:focus ~ img,
+img:hover ~ img {
+  transform: translateX(5%);
+} */
+
+div img:focus,
+div img:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+
+h2{
+  color: rgb(48, 175, 97);
+  text-align: left;
+  margin-left: 6rem;  
+}
+
+router-link{
+  text-decoration: none;
+}
+
 </style>

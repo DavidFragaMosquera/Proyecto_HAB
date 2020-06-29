@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      
-      <menucustom></menucustom>
+      <menucustom class="menuC"></menucustom>
     </div>
     <transition name="fade">
     <router-view/>
@@ -50,13 +49,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #2c2638;
+  background: #241f2e;
   color: #fff;
   list-style: none;
-}
+  min-height: 100vh;
 
+}
 #nav {
   padding: 30px;
+/*   position: -webkit-sticky;
+  position: sticky; */
+  top: -1px;
 }
 
 #nav a {
@@ -102,11 +105,15 @@ select{
     border-radius: 13px;
   padding: 0.5rem 2rem ;
 }
-date{
+date {
   border-radius: 13px;
   padding: 0.5rem 10rem;
 }
 h1{
 font-family: 'Russo One', sans-serif;
+}
+img{
+  max-width: 700px;
+  max-height: 200px; 
 }
 </style>

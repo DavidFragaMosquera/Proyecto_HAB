@@ -1,11 +1,14 @@
 <template>
   <div class="home">
+    <button @click="showBuscador()">Buscador avanzado 🔽</button>
+
 <!-- FORMULARIO PARA BUSCADOR -->
-    <div  id="buscador" >
+    <div  class="buscador" v-show="buscadorAvanzado">
       <form>
           <h3>🔎 Buscador de activos fotograficos</h3>
           <p>
             <b>Nombre </b>
+            <br>
             <input
               v-model="nombre_articulo"
               type="search"
@@ -15,29 +18,41 @@
           </p>
           <p>
             <b>Disponibilidad</b>
+            <br>
             <input v-model="disponibilidad" type="radio" name="disponibilidad" value="1"/> Disponible
+            <br>
             <input v-model="disponibilidad" type="radio" name="disponibilidad" value="0"/> No disponible
           </p>
           <p>
             <b>Fecha disponibilidad</b>
+            <br>
             <input v-model="fecha_fin" type="date" name="fecha_fin" />
           </p>
           <p>
             <b>Categoria</b>
+            <br>
             <input v-model="tipo" type="radio" name="tipo" value="alquiler"/> Alquiler de equipos
+            <br>
             <input v-model="tipo" type="radio" name="tipo" value="cesion_derechos"/> Cesion derechos de imagen
           </p>
           <p>
             <b>Articulo</b>
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="drones"/>Drones
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="camaras_reflex"/>Camaras
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="accesorios"/>Accesorios
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="bodas_eventos"/> Fotos de bodas y eventos
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="ecommerce_producto"/> Fotos e-commerce y producto
+            <br>
             <input v-model="subtipo" type="radio" name="subtipo" value="retrato_naturaleza"/> Fotos retrato y naturaleza
           </p>
           <p>
             <b>Precio</b>
+            <br>
             <input v-model="precio" type="number" name="precio"/>
           </p>
           <p>
@@ -59,7 +74,6 @@
           </ul>
         </div>
     </div>
-
   </div>
 </template>
 
@@ -82,7 +96,8 @@ export default {
       tipo: "",
       subtipo: "",
       precio: "",
-      imagen: ""
+      imagen: "",
+      buscadorAvanzado: false
     }
   },
   methods: {
@@ -91,7 +106,8 @@ export default {
     const searchProductsParams= self.makingSearchURL();
       axios
         .get(`http://localhost:3000/searching?${searchProductsParams}`)
-        .then(function (response) {      
+        .then(function (response) {
+          self.buscadorAvanzado = true;      
           self.searchResults = response.data.data.map((searchResult) => {
             searchResult.imagen = "http://localhost:3000/uploads/" + searchResult.imagen;
             return searchResult
@@ -131,7 +147,20 @@ export default {
       params.append("precio", this.precio);
     }
     return params;
+  },
+  showBuscador(){
+    this.buscadorAvanzado = !this.buscadorAvanzado;
   }
   }
 }
 </script>
+
+<style scoped>
+.home{
+ margin-left: 15rem;
+ text-align: left;
+}
+
+
+
+</style>

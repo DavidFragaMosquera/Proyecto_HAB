@@ -121,7 +121,7 @@ export default {
             Swal.fire({
               icon: "success",
               title: 'Cliente creado',
-              text: "Revisa tu mail para validad la cuenta 😀",
+              text: "Revisa tu mail para validar tu cuenta, gracias 😀",
               timer: 3000
       });
           })

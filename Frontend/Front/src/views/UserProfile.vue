@@ -13,10 +13,10 @@
        <h4>✔️  Ver los productos que has adquirido</h4>
        <h4>✔️  Cambiar tu contraseña</h4>
        <h4>✔️  Eliminar tu cuenta</h4>       
-        <img class="imgPerfil" :src="userData.imagen" alt="foto perfil usuario" />
       </div>
 <!-- LISTADO DATOS DE USUARIO -->
       <div v-show="!showEdit">
+       <img class="imgPerfil" :src="userData.imagen" alt="foto perfil usuario" />
         <ul class="datosperfil">
           <li> {{ userData.nombre }} {{ userData.apellidos }}</li>
           <li> {{ userData.fecha_nacimiento | moment(" DD-MM-YYYY" ) }}</li>
@@ -36,35 +36,39 @@
         <button @click="deleteUser()">Eliminar cuenta</button>
       </div>
 <!-- CAMBIAR CONTRASEÑA -->
-    <div class="password" v-show="seeEditPassword">
-        <h3 class="editPassword">CAMBIAR CONTRASEÑA</h3>
-        <p>Antigua contraseña</p>
+    <div class="editPassword" v-show="seeEditPassword">
+        <h2 class="editPassword">CAMBIAR CONTRASEÑA</h2>
+        <label for="oldpassword">Antigua Contraseña</label>
+        <br>
         <input
           type="password"
           v-model="oldPassword"
           placeholder="Contraseña anterior"/>
         <br>
-        <p>Nueva contraseña</p>
+        <label for="password">Nueva contraseña</label>
+        <br>
         <input type="password"
                v-model="password" 
               placeholder="Nueva contraseña" />
         <br>
-        <p>Repite la nueva contraseña</p>
+        <label for="passwordRepeat">Repetir nueva contraseña</label>
+        <br>
         <input
           type="password"
           v-model="passwordRepeat"
-          placeholder="Repeat your new Paswword"/>
+          placeholder="Repite nueva contraseña"/>
         <br>
         <button @click="editPassword()">Editar</button>
-        <button @click="seeEditPassword = false">Volver</button>
+        <button class="passwordBack" @click="seeEditPassword = false">Volver</button>
     </div>
 <!-- LISTADO ARTICULOS ADQUIRIDOS -->
         <div class="boughtProducts" v-show="!articulosComprados">
-          <h3>Articulos adquiridos</h3>
+          <h2>Productos adquiridos</h2>
+          <br>
           <ul v-for="articuloAdquirido in articulosAdquiridos" :key="articuloAdquirido.id">
             <li><img :src="articuloAdquirido.imagen" alt="imagen articulo"></li>
             <li>{{ articuloAdquirido.nombre_articulo }}</li>
-            <li>Precio: {{ articuloAdquirido.precio }}</li>
+            <li>Precio: {{ articuloAdquirido.precio }} €</li>
             <li> Dirección de envio: {{ articuloAdquirido.direccion }}</li>
             <li>Fecha Inicio: {{ articuloAdquirido.fecha_inicio | moment(" DD-MM-YYYY" )}}</li>
             <li>Fecha Finalización: {{ articuloAdquirido.fecha_fin | moment(" DD-MM-YYYY" ) }}</li>
@@ -98,6 +102,8 @@
         <fieldset>
           <ul>
             <li>
+              <label for="imagen">Subir imagen</label>
+              <br>
               <input type="file" id="imagenArticulo" ref="imagenArticulo" @change="handleFileUploadArticulo()" />
             </li>
             <li>
@@ -106,7 +112,7 @@
               <input type="text" name="nombre_articulo" id="nombre_articulo" v-model="nombre_articulo" />
             </li>
             <li>
-              <label for="tipo">Categoria:</label>
+              <label for="tipo">Categoria</label>
               <br/>
               <select
                 name="tipo"
@@ -118,7 +124,7 @@
             </li>
 
             <li>
-              <label for="subtipo">Subcategoria:</label>
+              <label for="subtipo">Tipo</label>
               <br/>
               <select
                 name="subtipo"
@@ -134,7 +140,7 @@
             </li>
 
             <li>
-              <label for="precio">Precio:</label>
+              <label for="precio">Precio</label>
               <br/>
               <input
                 type="number"
@@ -158,36 +164,48 @@
         </fieldset>
       </form>
       <button @click="createProduct()">Subir producto</button>
-      <button @click="seeProduct = false">Volver</button>
+      <button class="volverBot" @click="seeProduct = false">Volver</button>
     </div>
 <!-- EDITAR ARTICULO -->
   <div class="editProduct" v-show="seeEditProduct">
       <h4>Editar producto</h4>
-      
+        <label for="nombreArticulo">Nombre articulo</label>
+        <br>
         <input type="text" v-model="newNombreArticulo" placeholder="Nombre articulo"/>
+        <br>
+        <label for="precio">Precio</label>
         <br>
         <input type="text" v-model="newPrecio" placeholder="Precio" />
         <br>
-        <input type="text" v-model="newDescripcion" placeholder="Descripcion" />
+        <label for="descripcion">Descripción</label>
+        <!-- <input type="text" v-model="newDescripcion" placeholder="Descripcion" /> -->
+        <br>
+        <textarea 
+            name="descripcion"
+            id="descripcion"
+            cols="20" 
+            rows="10"
+            v-model="newDescripcion">
+            </textarea>
         <br>
         <input type="file" id="imagenProducto" ref="imagenProducto" @change="handleFileUploadProducto()" />
         <br>
         <button @click="editProduct()">Modificar</button>
         <br>
-        <div class="editUserProduct">
-        <button @click="seeEditProduct=false">Volver</button>
+        <div >
+        <button class="editUserProduct" @click="seeEditProduct=false">Volver</button>
         </div>
     </div>
 <!-- LISTADO ARTICULOS DE USUARIO -->
     <div class="articulosUsuario" v-show="!showProducts">
-      <h3>Mis productos</h3>
+      <h2>Mis productos</h2>
         <ul v-for="articulo in articulos" :key="articulo.id">
           <li><img :src="articulo.imagen" alt="imagen articulo"></li>
           <li>Nombre: {{ articulo.nombre_articulo }}</li>
           <li>Descripcion: {{ articulo.descripcion }}</li>
-          <li>Precio: {{ articulo.precio }}</li>
+          <li>Precio: {{ articulo.precio }} €</li>
           <button @click="showProduct(articulo)">Editar</button>
-          <button @click="deleteProduct(articulo)">Borrar</button>
+          <button class="borrarArt" @click="deleteProduct(articulo)">Borrar</button>
         </ul>
    </div>
 
@@ -195,7 +213,8 @@
     </div>
 <!-- EDICION DATOS USUARIO -->
     <div class="editUs" v-show="showEdit">
-      <h3>Editar usuario</h3>
+      <h2>Editar usuario</h2>
+      <br>
       <!-- <label for="biografia">Biografia</label> 
       <input type="text" v-model="newDescripcion" placeholder="Biografia" /> -->
       <label for="imagen">Cambiar foto de perfil</label>
@@ -300,7 +319,11 @@ export default {
           .get("http://localhost:3000/user/" + data)
           .then(function(response) {
             self.userData = response.data.data;
-            self.userData.imagen = "http://localhost:3000/uploads/" + self.userData.imagen;
+            if(!!self.userData.imagen) {
+              self.userData.imagen = "http://localhost:3000/uploads/" + self.userData.imagen;    
+            } else {
+              self.userData.imagen = "http://localhost:3000/uploads/avatar.jpg";
+            }
           })
           .catch(function(error) {
              Swal.fire({
@@ -431,15 +454,26 @@ export default {
       this.validatingProduct();
       const self = this;
       const token = localStorage.getItem("token");
+      let formData = new FormData();
+      formData.append("imagen", self.imagenArticulo);
+      formData.append("nombre_articulo", self.nombre_articulo);
+      formData.append("descripcion", self.descripcion);
+      formData.append("precio", self.precio);
+      formData.append("tipo", self.tipo);
+      formData.append("subtipo", self.subtipo);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       axios
-        .post("http://localhost:3000/products", {
+        .post("http://localhost:3000/products" , formData, {
           nombre_articulo: self.nombre_articulo,
           descripcion: self.descripcion,
           precio: self.precio,
           tipo: self.tipo,
           subtipo: self.subtipo,
           imagen: self.imagenArticulo
+        }, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         })
         .then(function(response) {
           Swal.fire({
@@ -659,12 +693,13 @@ export default {
 <style scoped>
 
 .modal {
-  position: fixed;
+  position: relative;
   top: 0;
-  left: 0;
-  bottom: 0;
-  border-radius: 150px;  
+  left: 5;
+  right: 5;
+  bottom: 20; 
   width: 100%;
+  background: rgba(170, 136, 175, 0.356);
 }
 .modalbox {
   background: black;
@@ -682,6 +717,8 @@ export default {
 }
 .botonera {
   padding-top: 3rem;
+  text-align: left;
+  margin-left: 6rem;
   
 }
 .botonera button{
@@ -698,8 +735,7 @@ export default {
 }
 .imgPerfil {
   border-radius: 50%;
-  margin-top: -16rem;
-  margin-left: 73rem;
+  margin: -3rem 95rem;
   transition: transform .9s ease;
   box-shadow:
     0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -718,10 +754,11 @@ export default {
   background: rgba(47, 6, 47, 0.253);
   padding-top: 120px;
   padding-right: 350px;
-  text-align: right;
+  text-align: left;
   padding-bottom: 70px;
   margin-top: -350px;
-  margin-right: 13%;
+  /* margin-right: 20%; */
+  margin-left: 40rem;
   border-radius: 9px;
   font-size: 1.5rem;
   box-shadow: 0px 8px 6px -6px rgba(65, 78, 88, 0.685); 
@@ -750,12 +787,42 @@ export default {
 .editUs input{
   margin-bottom: 1rem;
 }
-.editUs h3{
+.editUs h3, .boughtProducts h3{
     color: rgb(48, 175, 97);
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 .editUserImage button{
   background: rgba(0, 0, 0, 0.219);
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+
 }
 
+.nuevoArticulo li {
+  margin-bottom: 1rem ;
+}
+.nuevoArticulo button{
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+}
+.volverBot, .borrarArt, .editUserProduct, .passwordBack{
+    background: rgba(0, 0, 0, 0.219);
+    margin-left: 1rem;
+    margin-top: 1rem;
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+
+}
+.articulosUsuario, .boughtProducts {
+  display: flex;
+  flex-wrap: wrap ;
+  margin: 2rem;
+  justify-content: center;
+  flex-grow: initial;
+}
+
+.articulosUsuario li, .boughtProducts li, .editPassword input{
+  margin-bottom: 1rem;
+}
+.editProduct h4{
+    color: rgb(48, 175, 97);
+  
+}
 </style>
