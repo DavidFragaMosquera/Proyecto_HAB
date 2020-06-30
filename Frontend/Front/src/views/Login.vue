@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="todo">
     <vue-headful title="Login" />
 <!-- LOGIN DE USUARIO -->
     <div class="login">
@@ -144,4 +144,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+.todo{
+  background-image: url('../assets/newuser.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 900px;
+  width: 1800px;
+  min-width: 98vw;
+  padding-top: 3rem;
+  margin-top: 0rem;
+}
+.login form{
+  padding: 1rem;
+}
+</style>
+

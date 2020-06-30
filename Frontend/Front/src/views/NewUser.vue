@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="cont">
    <vue-headful title="Nuevo Usuario" />
-    <h2>Registrate!</h2>
+    <h2>CREA TU CUENTA Y DISFRUTA DE LAS VENTAJAS!</h2>
     <p v-show="required">
       TIENES DATOS AÚN POR RELLENAR.
     </p>
@@ -12,7 +12,7 @@
       <input
         type="text"
         name="login"
-        placeholder="Login"
+        placeholder="Escribe tu nombre de usuario"
         v-model="login"
       />
       <br />
@@ -20,7 +20,7 @@
       <input
         type="password"
         name="password"
-        placeholder="Contraseña"
+        placeholder="Escribe tu contraseña"
         v-model="password"
       />
       
@@ -29,7 +29,7 @@
       <input
         type="text"
         name="nombre"
-        placeholder="Nombre del usuario"
+        placeholder="Escribe tu nombre"
         v-model="nombre"
       />
       <br />
@@ -37,7 +37,7 @@
       <input
         type="text"
         name="apellidos"
-        placeholder="Apellidos del usuario"
+        placeholder="Escribe tus apellidos"
         v-model="apellidos"
       />
       <br />
@@ -45,7 +45,7 @@
       <input
         type="email"
         name="mail"
-        placeholder="Email"
+        placeholder="Escribe tu e-mail"
         v-model="mail"
       />
       <br />
@@ -53,7 +53,7 @@
       <input
         type="date"
         name="fecha_nacimiento"
-        placeholder="Fecha de nacimiento"
+        placeholder="Escribe tu fecha de nacimiento"
         v-model="fecha_nacimiento"
       />
       <br />
@@ -161,8 +161,13 @@ form {
   border-radius: 20px;
   flex-direction: column;
   font-weight: bold;
-  border-bottom: 1px solid white;
-/*   background-image: url('../assets/atardecer.jpg');
-  background-size: 100% 100%; */
+  /* border-bottom: 1px solid white; */
+}
+.cont{
+  min-width: 98vw;
+  padding: -2rem;
+  background-image: url('../assets/newuser.jpg');
+  background-size: cover;
+  height: 800px;
 }
 </style>

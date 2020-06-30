@@ -49,7 +49,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #241f2e;
+  /* background: #241f2e; */
+  background: black;
   color: #fff;
   list-style: none;
   min-height: 100vh;
@@ -116,4 +117,11 @@ img{
   max-width: 700px;
   max-height: 200px; 
 }
+
+a{
+  text-decoration: none;
+  color: rgb(48, 175, 97);
+
+}
+
 </style>

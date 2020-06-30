@@ -62,7 +62,7 @@
         @click="mostrarImagenEvent(index)">
       </div>
     </div>
-    <router-link :to="{ name:'Products'}"> Volver </router-link>
+    <router-link :to="{ name:'Products'}"> ↩️ </router-link>
   </div>
 </template>
 
@@ -132,5 +132,22 @@ buy(){
 </script>
 
 <style scoped>
-   
+   img {
+  margin-left: 5rem;
+  position: relative;
+  display: inline-block;
+  transition: transform 700ms;
+}
+
+div img:focus,
+div img:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+
+h2{
+  color: rgb(48, 175, 97);
+  text-align: left;
+  margin-left: 6rem;  
+}
 </style>

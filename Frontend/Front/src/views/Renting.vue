@@ -1,9 +1,11 @@
 <template>
   <div class="alquiler">
     <vue-headful title="Alquiler de equipos" />
+    <div class="imagen"></div>
     <div>
       <h2>Alquiler de equipos</h2>
       <listaalquileres 
+        class="productos"
         :camaras="camaras"
         :articulo="articulo" 
         :drones="drones" 
@@ -128,3 +130,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* .alquiler{
+  background-image: url('../assets/alquiler.jpg');
+  background-repeat: no-repeat; 
+  width: 100%;
+} */
+.imagen{
+  background-image: url('../assets/alquiler.jpg');
+  width: 100%;
+}
+.productos{
+  margin: 20rem;
+}
+
+</style>

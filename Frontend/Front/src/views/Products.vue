@@ -2,7 +2,7 @@
   <div class="articulos">
     <vue-headful title="Articulos" />
     <div>
-      <div class="buscador">
+<!--       <div class="buscador">
       <label for="bySearch">🔍 Busca articulos por nombre, categoria o precio</label>
       <br>
       <input
@@ -12,7 +12,7 @@
         type="search"
         placeholder="Busca tu articulo "
         size="33"/>
-    </div>
+    </div> -->
       <listaproductos 
         :articulos="articulos"
         :articulo="articulo" 
@@ -180,7 +180,7 @@ export default {
     this.showRent();
 
   },
-  computed: {
+/*   computed: {
     filteredProducts() {
       if(!this.search) {
         return this.articulos;
@@ -193,6 +193,6 @@ export default {
           articulo.precio.toLowerCase().includes(this.search.toLowerCase()) 
       );
     },
-  },
+  }, */
 };
 </script>

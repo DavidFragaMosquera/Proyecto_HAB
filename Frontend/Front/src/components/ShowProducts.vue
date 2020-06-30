@@ -34,7 +34,7 @@
           <div v-show="modal" class="modal">
           <div class="modalBox">
             <form>
-            <h3>Rellena los datos para finalizar tu compra, gracias</h3>
+            <h3>Rellena los datos para finalizar tu pedido, gracias</h3>
                  <label for="fecha_inicio"> Fecha Inicio:</label>
                  <br>
                  <input type="date" id="fecha_inicio" name="fecha_inicio" v-model="datosCompra.fecha_inicio" />
@@ -43,17 +43,17 @@
                  <br>
                  <input type="date" id="fecha_fin" name="fecha_fin" v-model="datosCompra.fecha_fin" />
                  <br>
-                 <label for="direccion"> Direccción:</label>
+                 <label for="direccion"> Dirección:</label>
                  <br>
                  <input type="text" id="direccion" name="direccion" v-model="datosCompra.direccion" />
                  <br>
                  </form>
-                  <button @click="buyProductEvent(articulo)">Comprar</button>
-                 <button class="voltar" @click="closeModal()">Volver</button>
+                 <button @click="buyProductEvent(articulo)">Comprar</button>
+                 <button class="voltar" @click="closeModal()">Cerrar</button>
           </div>
         </div>
         <br>
-        <button @click="verArticuloEvent">Volver</button>
+        <button @click="verArticuloEvent">Volver al menu</button>
       </div>
     <div class="articulos"
           v-show="!verArticulos">  
@@ -175,14 +175,20 @@ left: 0;
 bottom: 0;
 background: rgba(0, 0, 0, 0.5);
 width: 100%;
+padding-bottom: 2rem;
 }
 
-.modalbox {
+.modalBox {
 background: black;
 margin: 15% auto;
-padding: 20px;
-border: 1px solid black;
+padding:100px;
+border: 1px solid rgb(48, 175, 97);
+border-radius: 13px;
 width: 80%;
+}
+
+.modalBox button{
+  margin: 1rem;
 }
 
 /* .modalbox button .voltar{
@@ -191,21 +197,10 @@ width: 80%;
 
 img {
   position: relative;
+  text-align: left;
   display: block;
-  margin-left: 1rem;
-  /* flex: 1 1 0px; */
   transition: transform 700ms;
 }
-
-/* div:focus-within img,
-div:hover img {
-  transform: translateX(-5%);
-}
-
-img:focus ~ img,
-img:hover ~ img {
-  transform: translateX(5%);
-} */
 
 div img:focus,
 div img:hover {

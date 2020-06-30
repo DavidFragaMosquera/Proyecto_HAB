@@ -68,7 +68,7 @@
       </div>
     </div>
 <!-- VER TODOS LOS ACCESORIOS-->
-    <router-link :to="{ name:'Products'}"> Volver </router-link>
+    <router-link :to="{ name:'Products'}"> ↩️ </router-link>
   </div>
 </template>
 
@@ -138,5 +138,32 @@ buy(){
 </script>
 
 <style scoped>
-   
+  img {
+  position: relative;
+  display: block;
+ /*  flex: 1 1 0px; */
+  transition: transform 700ms;
+}
+
+/* div:focus-within img,
+div:hover img {
+  transform: translateX(-5%);
+}
+
+img:focus ~ img,
+img:hover ~ img {
+  transform: translateX(5%);
+} */
+
+div img:focus,
+div img:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+
+h2{
+  color: rgb(48, 175, 97);
+  text-align: left;
+  margin-left: 6rem;  
+}
 </style>
