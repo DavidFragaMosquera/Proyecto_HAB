@@ -1,46 +1,43 @@
 <template>
   <div class="todo">
-    <vue-headful title="Login" />
+    <vue-headful title="Iniciar sesión" />
 <!-- LOGIN DE USUARIO -->
     <div class="login">
       <fieldset>
-        <h2>Login</h2>
+        <h2>Iniciar sesión</h2>
         <form>
           <input type="text" placeholder="Nombre de usuario" v-model="login" />
           <br />
           <input type="password" placeholder="Contraseña" v-model="password" />
           <br />
         </form>
-          <button @click="Login(login, password)">Login</button>
+          <button @click="Login(login, password)">Acceder</button>
       </fieldset>
     </div>
 <!-- RECUPERAR CONTRASEÑA -->
   <div>
-    <h5>¿No recuerdas tu contraseña?</h5>
-     <h5>No te preocupes, pincha en el siguiente botón para recuperarla</h5> 
+    <h4>¿No recuerdas tu contraseña?</h4> 
     <button @click="showRecoveryPassword()">Recuperar Contraseña</button>
     <div class="recuperarContraseña" v-show="seeRecoveryPassword">
-      <h3>RECUPERAR CONTRASEÑA</h3>
-      <h4>¿Has olvidado tu contraseña?</h4>
-      <h5>No te preocupes, pon a continuación tu mail y te enviamos una nueva :)</h5>
+      <h5>Escribe a continuación tu mail y te enviamos una nueva :)</h5>
       <input type="email" v-model="mail" placeholder="Escribe tu e-mail">
       <br>
       <button @click="recoveryPassword()">Enviar</button>
-      <button @click="seeRecoveryPassword = false">Volver</button>
+      <button class="volver2" @click="seeRecoveryPassword = false">Volver</button>
     </div>  
   </div>
 <!-- REACTIVAR USUARIO ELIMINADO -->
     <br>
-    <h5>¿Has eliminado tu cuenta y quieres recuperarla?</h5>
+    <h4>¿Has eliminado tu cuenta y quieres recuperarla?</h4>
     <button @click="showReactivate()">Reactiva tu cuenta</button>
     <div class="ReactivarUsuario" v-show="seeReactivate">
-      <h3>Reactivar tu cuenta</h3>
+      <h5>Escribe a continuación tu nombre de usuario y contraseña</h5>
       <input type="text" placeholder="Nombre de usuario" v-model="loginRecover">
       <br>
       <input type="password" placeholder="Contraseña" v-model="passwordRecover">
       <br>
       <button @click="reactivate()">Reactivar cuenta</button>
-      <button @click="seeReactivate = false">Volver</button>
+      <button class="volver" @click="seeReactivate = false">Volver</button>
     </div>
   </div>
 </template>
@@ -147,17 +144,36 @@ export default {
 <style scoped>
 
 .todo{
-  background-image: url('../assets/newuser.jpg');
+  text-align: center;
+  background-image: url('../assets/persona.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 900px;
   width: 1800px;
   min-width: 98vw;
-  padding-top: 3rem;
+  padding-top: 1rem;
   margin-top: 0rem;
 }
-.login form{
-  padding: 1rem;
+.login form input, .ReactivarUsuario input{
+  margin: 0.5rem;
 }
+.login button{
+  margin-top: 0.5rem;
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479)
+
+}
+.recuperarContraseña button, .ReactivarUsuario button{
+  margin: 1rem;
+}
+h4, h2{
+  color: rgb(48, 175, 97);
+}
+.volver,.volver2{
+  background: rgba(54, 49, 49, 0.219);
+/*   margin-left: 1rem;
+  margin-top: 1rem; */
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479)
+}
+
 </style>
 

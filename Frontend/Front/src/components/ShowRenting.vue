@@ -1,17 +1,5 @@
 <template>
   <div>
-<!--     <div>
-      <label for="bySearch">Búsqueda</label>
-      <br />
-      <input
-        v-model="search"
-        id="search"
-        name="bySearch"
-        type="search"
-        placeholder="Busca tu articulo 🔍"
-      />
-    </div> -->
-
     <!-- VER ARTICULO DE FORMA INDIVIDUAL -->
       <div class="articulo" v-show="verArticulos">
          <h3>
@@ -23,15 +11,38 @@
           {{articulo.descripcion}}
         </p>
         <p> Precio: 
-          {{articulo.precio}}€
+          {{articulo.precio}}€/dia
+        </p>
+        <p>
+          Disponible {{articulo.fecha_fin | moment(" DD-MM-YYYY")}}
         </p>
         <br>
-        <button @click="buy()">Comprar</button> 
+        <button @click="openModal()">Comprar</button> 
         <br>
+        <div v-show="modal" class="modal">
+          <div class="modalBox">
+            <form>
+            <h3>Rellena los datos para finalizar tu pedido, gracias</h3>
+                 <label for="fecha_inicio"> Fecha Inicio:</label>
+                 <br>
+                 <input type="date" id="fecha_inicio" name="fecha_inicio" v-model="datosCompra.fecha_inicio" />
+                 <br>
+                 <label for="fecha_fin"> Fecha Fin:</label>
+                 <br>
+                 <input type="date" id="fecha_fin" name="fecha_fin" v-model="datosCompra.fecha_fin" />
+                 <br>
+                 <label for="direccion"> Dirección:</label>
+                 <br>
+                 <input type="text" id="direccion" name="direccion" v-model="datosCompra.direccion" />
+                 <br>
+                 </form>
+                 <button @click="buyProductEvent(articulo)">Comprar</button>
+                 <button class="voltar" @click="closeModal()">Cerrar</button>
+          </div>
+        </div>
         <br>
-        <button @click="verArticuloEvent">Volver</button>
+        <button @click="verArticuloEvent">Volver al menu</button>
       </div>
-    <!-- VER ARTICULO DE FORMA INDIVIDUAL -->
 <!-- VER TODAS LAS CAMARAS -->
     <div class="camaras"
           v-show="!verArticulos">  
@@ -68,12 +79,14 @@
       </div>
     </div>
 <!-- VER TODOS LOS ACCESORIOS-->
-    <router-link :to="{ name:'Products'}"> ↩️ </router-link>
+<!-- <button><router-link :to="{ name:'Products'}"> Volver al menú</router-link></button> -->    
   </div>
 </template>
 
 <script>
-/* import Swal from "sweetalert2"; */
+import Swal from "sweetalert2";
+import VModal from "vue-js-modal";
+import formatDateToDB from "@/aux/helpers.js"
 export default {
 name: 'listaalquileres',
 props:{
@@ -82,8 +95,15 @@ props:{
     drones: Array,
     accesorios: Array,
     verArticulos: Boolean,
-    id: Number
-}, 
+    id: Number,
+    comprar: Array, 
+    datosCompra: Object, 
+},
+  data(){
+    return {
+    modal:false,
+    } 
+  },
 methods: {
   mostrarCamarasEvent(index) {
       let data = this.camaras[index].id;
@@ -99,61 +119,57 @@ methods: {
     },
   verArticuloEvent() {
       this.$emit("verArticulo");
-    }
-}
-}
-
-
-/*data(){
-   return {
-    search:"",
-} */
-// },
-/* computed: {
-    filteredProducts() {
-      if (!this.search) {
-        return this.articulos;
-      }
-      return this.articulos.filter(
-        (articulo) =>
-          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
-          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) 
-      )
     },
-}, */
-/* methods:{
-buy(){
-  this.$router.push("/user/logIn");
+  openModal() {
+    this.modal = true;
 
-  this.$emit(comprar)
-  Swal.fire({
-    title: 'Articulo comprado',
-    text:`Recibirás un mail con tu compra`,
-    confirmButtonText: "Continuar comprando",
-  });
-},
-} 
-};*/
+  },
+  closeModal(){
+    this.modal = false;
+
+  },
+  buyProductEvent(articulo) {
+    let data = articulo.id
+    this.$emit("comprar", data);
+  }
+}
+}
 </script>
 
 <style scoped>
-  img {
+
+div{
+display: inline-block;
+}
+.modal {
+position: fixed;
+top: 5;
+left: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.5);
+width: 100%;
+padding-bottom: 2rem;
+}
+
+.modalBox {
+background: black;
+margin: 15% auto;
+padding:100px;
+border: 1px solid rgb(48, 175, 97);
+border-radius: 13px;
+width: 80%;
+}
+
+.modalBox button{
+  margin: 1rem;
+}
+
+img {
   position: relative;
+  text-align: left;
   display: block;
- /*  flex: 1 1 0px; */
   transition: transform 700ms;
 }
-
-/* div:focus-within img,
-div:hover img {
-  transform: translateX(-5%);
-}
-
-img:focus ~ img,
-img:hover ~ img {
-  transform: translateX(5%);
-} */
 
 div img:focus,
 div img:hover {
@@ -165,5 +181,9 @@ h2{
   color: rgb(48, 175, 97);
   text-align: left;
   margin-left: 6rem;  
+}
+
+router-link{
+  text-decoration: none;
 }
 </style>

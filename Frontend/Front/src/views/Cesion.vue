@@ -10,7 +10,10 @@
         :retrato_naturalezas="retrato_naturalezas" 
         :verArticulos="verArticulos"
         v-on:go="mostrarArticulo"
-        v-on:verArticulo="verArticulo">
+        v-on:verArticulo="verArticulo"
+        v-on:comprar="comprar"
+        :datosCompra="datosCompra"
+        >
         </listacesion>
     </div>
   </div>
@@ -20,6 +23,8 @@
 import axios from "axios";
 import vueHeadful from "vue-headful";
 import listacesion from "@/components/ShowCesion.vue";
+import formatDateToDB from "@/aux/helpers.js"
+import Swal from "sweetalert2"
 
 export default {  
   name: "articulos",
@@ -34,6 +39,8 @@ export default {
       bodas_eventoss: [],
       retrato_naturalezas: [],
       verArticulos: false,
+      datosCompra: {},
+      correctData: false,
     };
   },
   methods: {
@@ -43,7 +50,6 @@ export default {
       axios
         .get("http://localhost:3000/products/category/cesion_derechos/ecommerce_producto")
         .then(function (response) {
-            console.log(response)
        self.ecommerce_productos = response.data.data.map((ecommerce_producto) => {
          ecommerce_producto.imagen = "http://localhost:3000/uploads/" + ecommerce_producto.imagen;
          return ecommerce_producto 
@@ -100,7 +106,57 @@ export default {
     },
     verArticulo(){
       this.verArticulos=false;
+    },// FUNCION PARA COMPRAR UN PRODUCTO
+      comprar(data) {
+        this.validateBuy();
+        const self = this;
+        const token = localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        console.log(self.correctData)
+          if (self.correctData === true){
+        axios
+        .post("http://localhost:3000/products/pedido/" + data, {
+          direccion: self.datosCompra.direccion,
+          fecha_inicio: self.datosCompra.fecha_inicio,
+          fecha_fin: self.datosCompra.fecha_fin
+    })
+    .then(function(response){
+        Swal.fire({
+            icon: "success",
+            title: "Articulo comprado con exito",
+            text: "Revisa tu mail para la confirmación de la compra",
+            timer: "3000"
+          });
+        self.emptyBuy();
+    })
+    .catch(function(error){
+      console.error(error.response.data.message)
+    });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Faltan datos por cubrir',
+        timer: 3000
+      })
     }
+  },
+    validateBuy() {
+      if (
+        this.datosCompra.direccion === "" ||
+        this.datosCompra.fecha_inicio === "" ||
+        this.datosCompra.fecha_fin === ""
+      ) {
+        this.correctData = false;
+      } else {
+        this.correctData = true;
+      }
+    },
+    emptyBuy() {
+      this.datosCompra.direccion = "";
+      this.datosCompra.fecha_inicio = "";
+      this.datosCompra.fecha_fin ="";
+  }
   },
   created() {
     this.showEcommerceProducto();

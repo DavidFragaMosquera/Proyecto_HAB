@@ -37,7 +37,7 @@
       </div>
 <!-- CAMBIAR CONTRASEÑA -->
     <div class="editPassword" v-show="seeEditPassword">
-        <h2 class="editPassword">CAMBIAR CONTRASEÑA</h2>
+        <h2 class="editPassword">Cambiar contraseña</h2>
         <label for="oldpassword">Antigua Contraseña</label>
         <br>
         <input
@@ -74,6 +74,7 @@
             <li>Fecha Finalización: {{ articuloAdquirido.fecha_fin | moment(" DD-MM-YYYY" ) }}</li>
             <li>Pedido nº: {{ articuloAdquirido.id }}</li>
             <button @click="openModal(articuloAdquirido)">Valorar</button>
+          </ul>
               <div v-show="modal" class="modal">
                 <div class="modalBox">
                     <h3>Puedes valorar tu producto para ayudar a otros usuarios. Gracias por tu tiempo</h3>
@@ -89,11 +90,11 @@
                       cols="66"
                       rows="6">                     
                     </textarea>
-                    <button @click="ratingProduct(articuloAdquirido, rating, comentario)">Valorar producto</button>
+                    <br>
+                    <button @click="ratingProduct(articuloValorado, rating, comentario)">Valorar producto</button>
                     <button @click="closeModal()">Volver</button>
                 </div>
               </div>
-          </ul>
         </div>
 <!-- NUEVO ARTICULO -->
     <div class="nuevoArticulo" v-show="seeProduct">
@@ -306,6 +307,7 @@ export default {
       oldPassword: "",
       password: "",
       passwordRepeat: "",
+      articuloValorado:""
     };
   },
   methods: {
@@ -640,7 +642,8 @@ export default {
         });
       })
     },
-    openModal() {
+    openModal(articuloAdquirido) {
+      this.articuloValorado = articuloAdquirido;
       this.modal = true;
     },
     closeModal() {
@@ -694,27 +697,26 @@ export default {
 
 .modal {
   position: relative;
-  top: 0;
-  left: 5;
-  right: 5;
-  bottom: 20; 
+  top: -65rem;
+  left: 0;
+  right: 50rem;
+  bottom: 0; 
   width: 100%;
-  background: rgba(170, 136, 175, 0.356);
+  background: rgb(0, 0, 0);
 }
-.modalbox {
-  background: black;
+.modalBox {
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-radius: 50px;
-  border: solid 2px black;
- /*  box-shadow: 0 0 1px rgb(12, 12, 12); */
 }
+.modalBox button{
+  margin: 1rem;
+}
+
 .botonera {
   padding-top: 3rem;
   text-align: left;
@@ -757,7 +759,6 @@ export default {
   text-align: left;
   padding-bottom: 70px;
   margin-top: -350px;
-  /* margin-right: 20%; */
   margin-left: 40rem;
   border-radius: 9px;
   font-size: 1.5rem;
@@ -778,12 +779,7 @@ export default {
   text-align: left;
   margin-left: 6rem;  
 }
-/* .editUs{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: 20%;
-} */
+
 .editUs input{
   margin-bottom: 1rem;
 }
@@ -823,6 +819,6 @@ export default {
 }
 .editProduct h4{
     color: rgb(48, 175, 97);
-  
 }
+
 </style>

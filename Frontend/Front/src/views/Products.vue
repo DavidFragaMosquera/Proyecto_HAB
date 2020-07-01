@@ -2,17 +2,6 @@
   <div class="articulos">
     <vue-headful title="Articulos" />
     <div>
-<!--       <div class="buscador">
-      <label for="bySearch">🔍 Busca articulos por nombre, categoria o precio</label>
-      <br>
-      <input
-        v-model="search"
-        id="search"
-        name="bySearch"
-        type="search"
-        placeholder="Busca tu articulo "
-        size="33"/>
-    </div> -->
       <listaproductos 
         :articulos="articulos"
         :articulo="articulo" 
@@ -180,19 +169,5 @@ export default {
     this.showRent();
 
   },
-/*   computed: {
-    filteredProducts() {
-      if(!this.search) {
-        return this.articulos;
-      }
-      return this.articulos.filter(
-        (articulo) =>
-          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
-          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.precio.toLowerCase().includes(this.search.toLowerCase()) 
-      );
-    },
-  }, */
 };
 </script>

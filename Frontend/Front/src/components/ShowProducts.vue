@@ -1,16 +1,6 @@
 <template>
   <div class="todo">
-    <!-- <div class="buscador">
-      <label for="bySearch">🔍 Busca articulos por nombre, categoria o precio</label>
-      <br>
-      <input
-        v-model="search"
-        id="search"
-        name="bySearch"
-        type="search"
-        placeholder="Busca tu articulo "
-        size="33"/>
-    </div> -->
+    <!-- VER ARTICULOS DE FORMA INDIVIDUAL -->
     <div class="articulo" v-show="verArticulos">
          <h3>
           {{articulo.nombre_articulo}}
@@ -21,16 +11,15 @@
           {{articulo.descripcion}}
         </p>
         <p> Precio: 
-          {{articulo.precio}}€
+          {{articulo.precio}}€/día
         </p>
         <p>
           Disponible {{articulo.fecha_fin | moment(" DD-MM-YYYY")}}
         </p>
         <br>
-
         <button @click="openModal()">Comprar</button>
         <br>
-        <!-- <button @click="verArticuloEvent">Volver</button> -->
+<!-- COMPRA -->
           <div v-show="modal" class="modal">
           <div class="modalBox">
             <form>
@@ -55,6 +44,7 @@
         <br>
         <button @click="verArticuloEvent">Volver al menu</button>
       </div>
+      <!-- VER TODOS LOS ARTICULOS -->
     <div class="articulos"
           v-show="!verArticulos">  
           <h2>Todos los articulos</h2>
@@ -65,7 +55,7 @@
         @click="mostrarArticuloEvent(index)">
       </div>
     </div>
-
+    <!-- VER CESION DE IMAGENES -->
       <div 
           v-show="!verArticulos">  
         <h2><router-link :to="{ name:'Cesion'}"> Cesion derechos de imagen</router-link></h2>
@@ -76,7 +66,7 @@
         @click="mostrarCesionEvent(index)">
       </div>
     </div>
-    
+    <!-- VER ALQUILERES DE PRODUCTOS -->
       <div 
           v-show="!verArticulos">  
         <h2><router-link :to="{ name:'Renting'}"> Alquiler de equipos</router-link></h2>
@@ -113,24 +103,8 @@ props:{
 data(){
   return {
     modal:false,
-    /* search: "" */
   }
 },
-//BUSCADOR
-/*   computed: {
-    filteredProducts() {
-      if(!this.search) {
-        return this.articulos;
-      }
-      return this.articulos.filter(
-        (articulo) =>
-          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
-          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.precio.toLowerCase().includes(this.search.toLowerCase()) 
-      );
-    },
-  }, */
 
 methods: {
   mostrarArticuloEvent(index) {  
@@ -191,9 +165,6 @@ width: 80%;
   margin: 1rem;
 }
 
-/* .modalbox button .voltar{
- margin-left: 2rem;
-} */
 
 img {
   position: relative;

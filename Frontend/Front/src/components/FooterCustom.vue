@@ -20,7 +20,7 @@ p {
   font-family: helvetica, sans-serif;
   font-size: 0.8rem;
   margin-top: 2rem;
-  color: grey;
+  color: rgb(48, 175, 97);
   padding-top: 50vh;
 }
 

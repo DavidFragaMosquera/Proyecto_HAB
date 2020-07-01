@@ -50,7 +50,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   /* background: #241f2e; */
-  background: black;
+  background: rgba(0, 0, 0, 0.89);
   color: #fff;
   list-style: none;
   min-height: 100vh;
@@ -121,7 +121,9 @@ img{
 a{
   text-decoration: none;
   color: rgb(48, 175, 97);
-
+}
+fieldset{
+  border: none;
 }
 
 </style>

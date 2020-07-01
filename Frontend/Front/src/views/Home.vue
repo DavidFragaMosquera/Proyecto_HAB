@@ -3,7 +3,7 @@
     <h1>P I C S F Y</h1>
     <h2>a c t i v o s  f o t o g r á f i c o s</h2>
     <div class="descripcion">
-    <p> ✔️ Saca provecho a tu eqipo fotográfico alquilandoselo a otras personas </p>
+    <p> ✔️ Saca provecho a tu equipo fotográfico alquilandoselo a otras personas </p>
     <p> ✔️ Cede derechos de tus imagenes por el precio que creas conveniente </p>
     <p> ✔️ Alquila equipo fotografico para ese viaje u ocasión especial </p>
     <p> ✔️ Adquiere derechos de imagen para usarlas en tu negocio </p>
@@ -224,10 +224,9 @@ h2{
   font-size: 1.3rem;
   box-shadow: 0px 8px 6px -6px rgba(59, 67, 73, 0.678); 
   
-
 }
 .descripcion .crear{
-  background: rgb(35, 124, 69);
+  background: rgba(89, 167, 204, 0.322);
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 
 

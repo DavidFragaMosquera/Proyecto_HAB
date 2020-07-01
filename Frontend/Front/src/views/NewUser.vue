@@ -5,6 +5,12 @@
     <p v-show="required">
       TIENES DATOS AÚN POR RELLENAR.
     </p>
+    <div class="ventajas">
+    <h3> ✔️ Alquila productos </h3>
+    <h3> ✔️ Adquiere derechos de imagen </h3>
+    <h3> ✔️ Pon en alquiler tus productos </h3>
+    <h3> ✔️ Pon en venta derechos de imagen de tus fotos</h3>
+    </div>
     <!-- FORMULARIO -->
     <div>
       <form>
@@ -155,19 +161,33 @@ p {
 }
 form {
   padding: 1rem;
-  color: rgb(48, 175, 97);
+  color: white;
+  font-weight: bold;
   display: flex;
   align-items: center;
   border-radius: 20px;
   flex-direction: column;
   font-weight: bold;
-  /* border-bottom: 1px solid white; */
 }
 .cont{
   min-width: 98vw;
   padding: -2rem;
-  background-image: url('../assets/newuser.jpg');
+  background-image: url('../assets/sacofoto.jpg');
   background-size: cover;
   height: 800px;
 }
+.ventajas{
+  text-align: left;
+  position: absolute; 
+  visibility: visible; 
+  left: 300px; 
+  top: 350px; 
+  z-index: 200;
+  font-weight: bold;
+}
+h2{
+  color: rgb(48, 175, 97);
+
+}
+
 </style>

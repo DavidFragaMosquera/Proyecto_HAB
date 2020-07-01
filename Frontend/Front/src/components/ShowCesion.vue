@@ -1,16 +1,5 @@
 <template>
   <div>
-<!--     <div>
-      <label for="bySearch">Búsqueda</label>
-      <br />
-      <input
-        v-model="search"
-        id="search"
-        name="bySearch"
-        type="search"
-        placeholder="Busca tu articulo 🔍"
-      />
-    </div> -->
       <div class="articulo" v-show="verArticulos">
          <h3>
           {{articulo.nombre_articulo}}
@@ -21,15 +10,39 @@
           {{articulo.descripcion}}
         </p>
         <p> Precio: 
-          {{articulo.precio}}€
+          {{articulo.precio}}€/dia
+        </p>
+        <p>
+          Disponible {{articulo.fecha_fin | moment(" DD-MM-YYYY")}}
         </p>
         <br>
-        <button @click="buy()">Comprar</button> 
+        <button @click="openModal()">Comprar</button> 
         <br>
+        <div v-show="modal" class="modal">
+          <div class="modalBox">
+            <form>
+            <h3>Rellena los datos para finalizar tu pedido, gracias</h3>
+                 <label for="fecha_inicio"> Fecha Inicio:</label>
+                 <br>
+                 <input type="date" id="fecha_inicio" name="fecha_inicio" v-model="datosCompra.fecha_inicio" />
+                 <br>
+                 <label for="fecha_fin"> Fecha Fin:</label>
+                 <br>
+                 <input type="date" id="fecha_fin" name="fecha_fin" v-model="datosCompra.fecha_fin" />
+                 <br>
+                 <label for="direccion"> Dirección:</label>
+                 <br>
+                 <input type="text" id="direccion" name="direccion" v-model="datosCompra.direccion" />
+                 <br>
+                 </form>
+                 <button @click="buyProductEvent(articulo)">Comprar</button>
+                 <button class="voltar" @click="closeModal()">Cerrar</button>
+          </div>
+        </div>
         <br>
-        <button @click="verArticuloEvent">Volver</button>
+        <button @click="verArticuloEvent">Volver al menu</button>
       </div>
-
+<!-- VER ARTICULOS ECOMMERCE Y PRODUCTOS -->
     <div class="ecommerce_productos"
           v-show="!verArticulos">  
           <h2>Fotografias e-commerce y producto</h2>
@@ -40,7 +53,7 @@
         @click="mostrarArticuloEvent(index)">
       </div>
     </div>
-
+<!-- VER ARTICULOS BODAS Y EVENTOS -->
         <div 
           v-show="!verArticulos">  
           <h2>Fotografias bodas y eventos</h2>
@@ -51,7 +64,7 @@
         @click="mostrarBodasEvent(index)">
       </div>
     </div>
-    
+<!-- VER ARTICULOS RETRATO Y NATURALEZA -->
       <div 
           v-show="!verArticulos">  
           <h2>Fotografias retrato y naturaleza</h2>
@@ -62,12 +75,14 @@
         @click="mostrarImagenEvent(index)">
       </div>
     </div>
-    <router-link :to="{ name:'Products'}"> ↩️ </router-link>
+    <button><router-link :to="{ name:'Products'}"> Volver al menú</router-link></button>    
   </div>
 </template>
 
 <script>
-/* import Swal from "sweetalert2"; */
+import Swal from "sweetalert2";
+import VModal from "vue-js-modal";
+import formatDateToDB from "@/aux/helpers.js"
 export default {
 name: 'listaproductos',
 props:{
@@ -76,8 +91,15 @@ props:{
     bodas_eventoss: Array,
     retrato_naturalezas: Array,
     verArticulos: Boolean,
-    id: Number
+    id: Number,
+    comprar: Array, 
+    datosCompra: Object,
 }, 
+data(){
+  return {
+    modal:false,
+  }
+},
 methods: {
   mostrarArticuloEvent(index) {
       let data = this.ecommerce_productos[index].id;
@@ -93,49 +115,56 @@ methods: {
     },
   verArticuloEvent() {
       this.$emit("verArticulo");
-    }
-}
-}
-
-
-/*data(){
-   return {
-    search:"",
-} */
-// },
-/* computed: {
-    filteredProducts() {
-      if (!this.search) {
-        return this.articulos;
-      }
-      return this.articulos.filter(
-        (articulo) =>
-          articulo.nombre_articulo.toLowerCase().includes(this.search.toLowerCase())  ||
-          articulo.tipo.toLowerCase().includes(this.search.toLowerCase()) ||
-          articulo.subtipo.toLowerCase().includes(this.search.toLowerCase()) 
-      )
     },
-}, */
-/* methods:{
-buy(){
-  this.$router.push("/user/logIn");
+  openModal() {
+    this.modal = true;
 
-  this.$emit(comprar)
-  Swal.fire({
-    title: 'Articulo comprado',
-    text:`Recibirás un mail con tu compra`,
-    confirmButtonText: "Continuar comprando",
-  });
-},
-} 
-};*/
+  },
+  closeModal() {
+    this.modal = false;
+
+  },
+  buyProductEvent(articulo) {
+    let data = articulo.id
+    this.$emit("comprar", data);
+  }
+}
+}
+
 </script>
 
 <style scoped>
-   img {
-  margin-left: 5rem;
+div{
+display: inline-block;
+}
+.modal {
+position: fixed;
+top: 5;
+left: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.5);
+width: 100%;
+padding-bottom: 2rem;
+}
+
+.modalBox {
+background: black;
+margin: 15% auto;
+padding:100px;
+border: 1px solid rgb(48, 175, 97);
+border-radius: 13px;
+width: 80%;
+}
+
+.modalBox button{
+  margin: 1rem;
+}
+
+
+img {
   position: relative;
-  display: inline-block;
+  text-align: left;
+  display: block;
   transition: transform 700ms;
 }
 
@@ -149,5 +178,9 @@ h2{
   color: rgb(48, 175, 97);
   text-align: left;
   margin-left: 6rem;  
+}
+
+router-link{
+  text-decoration: none;
 }
 </style>

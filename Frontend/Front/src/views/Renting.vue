@@ -12,7 +12,9 @@
         :accesorios="accesorios" 
         :verArticulos="verArticulos"
         v-on:go="mostrarArticulo"
-        v-on:verArticulo="verArticulo">
+        v-on:verArticulo="verArticulo"
+        v-on:comprar="comprar"
+        :datosCompra="datosCompra" >
         </listaalquileres>
 
     </div>
@@ -23,6 +25,8 @@
 import axios from "axios";
 import vueHeadful from "vue-headful";
 import listaalquileres from "@/components/ShowRenting.vue";
+import formatDateToDB from "@/aux/helpers.js"
+import Swal from "sweetalert2";
 
 export default {  
   name: "alquileres",
@@ -36,7 +40,9 @@ export default {
       articulo: {},
       drones: [],
       accesorios: [],
-      verArticulos: false 
+      verArticulos: false,
+      datosCompra: {},
+      correctData: false,
     };
   },
   methods: {
@@ -121,7 +127,58 @@ export default {
     },
     verArticulo(){
       this.verArticulos=false;
+    },
+// FUNCION PARA COMPRAR UN PRODUCTO
+      comprar(data) {
+        this.validateBuy();
+        const self = this;
+        const token = localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        console.log(self.correctData)
+          if (self.correctData === true){
+        axios
+        .post("http://localhost:3000/products/pedido/" + data, {
+          direccion: self.datosCompra.direccion,
+          fecha_inicio: self.datosCompra.fecha_inicio,
+          fecha_fin: self.datosCompra.fecha_fin
+    })
+    .then(function(response){
+        Swal.fire({
+            icon: "success",
+            title: "Articulo comprado con exito",
+            text: "Revisa tu mail para la confirmación de la compra",
+            timer: "3000"
+          });
+        self.emptyBuy();
+    })
+    .catch(function(error){
+      console.error(error.response.data.message)
+    });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Faltan datos por cubrir',
+        timer: 3000
+      })
     }
+  },
+    validateBuy() {
+      if (
+        this.datosCompra.direccion === "" ||
+        this.datosCompra.fecha_inicio === "" ||
+        this.datosCompra.fecha_fin === ""
+      ) {
+        this.correctData = false;
+      } else {
+        this.correctData = true;
+      }
+    },
+    emptyBuy() {
+      this.datosCompra.direccion = "";
+      this.datosCompra.fecha_inicio = "";
+      this.datosCompra.fecha_fin ="";
+  }
   },
   created() {
     this.showCamaras();
@@ -132,11 +189,11 @@ export default {
 </script>
 
 <style scoped>
-/* .alquiler{
-  background-image: url('../assets/alquiler.jpg');
+.alquiler{
+  background-image: url('../assets/estirado.jpg');
   background-repeat: no-repeat; 
   width: 100%;
-} */
+}
 .imagen{
   background-image: url('../assets/alquiler.jpg');
   width: 100%;
