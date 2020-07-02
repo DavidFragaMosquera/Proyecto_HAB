@@ -3,10 +3,10 @@
   <div id="nav">
       <h1>P  I  C  S  F  Y</h1>
       <p><router-link :to="{ name:'Home'}"> Home</router-link></p>
-      <p><router-link :to="{ name:'Login'}" v-show="!seeIsLogged"> Login </router-link></p>
+      <p v-show="!seeIsLogged"><router-link :to="{ name:'Login'}" > Login </router-link></p>
       <p><router-link :to="{ name:'Products'}">Productos</router-link></p>
-      <p><router-link :to="{ name:'NewUser'}" v-show="!seeIsLogged"> Registrate </router-link></p>
-      <p><router-link :to="{ name:'Profile'}" v-show="seeIsLogged"> Mi perfil </router-link></p>
+      <p  v-show="!seeIsLogged"><router-link :to="{ name:'NewUser'}"> Registrate </router-link></p>
+      <p  v-show="seeIsLogged"><router-link :to="{ name:'Profile'}"> Mi perfil </router-link></p>
       <p><router-link :to="{ name:'About'}"> About</router-link></p>
 
       <br/>
@@ -47,9 +47,8 @@ export default {
   display: flex;
   text-decoration: none;
   justify-content: flex-end;
-  background: rgba(47, 6, 47, 0.253);
+  background: rgba(189, 177, 189, 0.089);
   font-weight: bold;
-  border-radius: 13px;
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 
 }
@@ -68,7 +67,7 @@ export default {
   margin-left: -1.5rem;
 }
 
-#nav p:last-child /* ,regist */{
+#nav p:last-child{
   border-right: none;
 }
 button{

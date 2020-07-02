@@ -21,7 +21,7 @@ p {
   font-size: 0.8rem;
   margin-top: 2rem;
   color: rgb(48, 175, 97);
-  padding-top: 50vh;
+  background: #1C1C1C;
 }
 
 </style>

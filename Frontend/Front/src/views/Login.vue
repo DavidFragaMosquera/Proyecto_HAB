@@ -2,6 +2,7 @@
   <div class="todo">
     <vue-headful title="Iniciar sesión" />
 <!-- LOGIN DE USUARIO -->
+    <div class="caja">
     <div class="login">
       <fieldset>
         <h2>Iniciar sesión</h2>
@@ -38,6 +39,7 @@
       <br>
       <button @click="reactivate()">Reactivar cuenta</button>
       <button class="volver" @click="seeReactivate = false">Volver</button>
+    </div>
     </div>
   </div>
 </template>
@@ -154,6 +156,16 @@ export default {
   padding-top: 1rem;
   margin-top: 0rem;
 }
+.caja{
+  background: rgba(0, 0, 0, 0.322);
+  padding-bottom: 2rem;
+  width: 25%;
+  border-radius: 20px;
+  margin-left: 50rem;
+  margin-top: 4rem;
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
+
+}
 .login form input, .ReactivarUsuario input{
   margin: 0.5rem;
 }
@@ -170,10 +182,9 @@ h4, h2{
 }
 .volver,.volver2{
   background: rgba(54, 49, 49, 0.219);
-/*   margin-left: 1rem;
-  margin-top: 1rem; */
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479)
 }
+
 
 </style>
 

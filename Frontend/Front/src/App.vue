@@ -49,7 +49,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* background: #241f2e; */
   background: rgba(0, 0, 0, 0.89);
   color: #fff;
   list-style: none;
@@ -58,8 +57,6 @@ export default {
 }
 #nav {
   padding: 30px;
-/*   position: -webkit-sticky;
-  position: sticky; */
   top: -1px;
 }
 
@@ -80,15 +77,15 @@ ul{
 button{
   border-radius: 9px;
   padding: 0.7rem 2rem;
-  background: rgb(104, 39, 104);
+  background: rgba(83, 44, 83, 0.096);
   color: #fff;
   font-weight: bold;
   transition: all 0.9s ease;
   position: relative;
-  
+  box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 }
 button:hover {
-  background:rgb(44, 7, 33);
+  background:rgb(0, 0, 0);
   overflow: hidden;
   top: 1.7px;
   transition: all 0.9s ease;

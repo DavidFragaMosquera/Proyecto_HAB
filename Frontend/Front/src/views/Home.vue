@@ -64,7 +64,7 @@
           <p>
             <b>Precio</b>
             <br>
-            <input v-model="precio" type="number" name="precio"/>
+            <input v-model="precio" type="number" name="precio" placeholder="precio en €uros"/>
           </p>
           <p>
             <input type="reset" value="Borrar" />
@@ -202,6 +202,9 @@ h2{
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
+  background: #1C1C1C;
+  position: relative;
+  
 }
 
 .resultados li{
@@ -212,13 +215,17 @@ h2{
   text-align: left;
   position: absolute; 
   visibility: visible; 
-  left: 1200px; 
-  top: 350px; 
+  left: 1150px; 
+  top: 320px; 
   z-index: 200;
   font-weight: bold;
+  background: rgba(104, 103, 103, 0.233);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0px 8px 6px -6px rgba(78, 73, 98, 0.548); 
 }
 .descripcion button{
-  margin-left: 1.5rem;
+  margin-left: 3rem;
   margin-top: 2rem;
   padding: 1.5rem 2rem;
   font-size: 1.3rem;
@@ -226,20 +233,18 @@ h2{
   
 }
 .descripcion .crear{
-  background: rgba(89, 167, 204, 0.322);
+  background:#326d6a75;
+  color: black;
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 
 
 }
 .descripcion .crear:hover{
-  background:rgb(18, 44, 7);
+  background:rgba(0, 0, 0, 0.342);
   transition: all 0.9s ease;
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 }
 .descripcion button a{
   color:white;
 }
-
-
-
 </style>

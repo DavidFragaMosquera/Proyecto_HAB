@@ -12,9 +12,9 @@
     <h3> ✔️ Pon en venta derechos de imagen de tus fotos</h3>
     </div>
     <!-- FORMULARIO -->
-    <div>
+    <div class="registro">
       <form>
-      <label for="login">Login</label>
+      <label for="login">Nombre de usuario</label>
       <input
         type="text"
         name="login"
@@ -169,6 +169,15 @@ form {
   flex-direction: column;
   font-weight: bold;
 }
+
+.registro{
+  background: rgba(104, 104, 104, 0.109);
+  width: 25%;
+  padding: 2rem;
+  border-radius: 20px;
+  margin-left: 40rem;
+  box-shadow: 0px 8px 6px -6px rgba(32, 37, 41, 0.479); 
+}
 .cont{
   min-width: 98vw;
   padding: -2rem;
@@ -180,14 +189,14 @@ form {
   text-align: left;
   position: absolute; 
   visibility: visible; 
-  left: 300px; 
-  top: 350px; 
+  left: 200px; 
+  top: 290px; 
   z-index: 200;
   font-weight: bold;
 }
 h2{
   color: rgb(48, 175, 97);
-
+  margin-top: -1rem;
 }
 
 </style>
