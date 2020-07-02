@@ -136,6 +136,12 @@ export default {
     })
     .catch(function(error){
       console.error(error.response.data.message)
+        Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Articulo no disponible',
+        timer: 3000
+      })
     });
     } else {
       Swal.fire({

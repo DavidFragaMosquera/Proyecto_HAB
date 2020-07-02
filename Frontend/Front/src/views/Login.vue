@@ -72,13 +72,14 @@ export default {
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem("login", response.data.login);
           localStorage.setItem("id", response.data.id);
-          self.$router.push("/products");
           Swal.fire({
               icon: "success",
               title: 'Login correcto',
               text: "Disfruta por la web, compra y vende mucho 😀",
               timer: 3000
           });
+          self.$router.push("/profile");
+
         })
         .catch(function(error) {
          Swal.fire({
@@ -87,7 +88,6 @@ export default {
           text: 'Nombre de usuario o contraseña incorrecta',
           timer: 2000
         })
-          console.error(error.response.data.message);
         });
     },
 // RECUPERAR CONTRASEÑA

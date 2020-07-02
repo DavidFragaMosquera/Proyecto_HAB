@@ -130,7 +130,7 @@ function searchProducts(queryParams) {
     }
 
     if (fecha_fin) {
-      conditions.push('fecha_fin <= ?');
+      conditions.push('fecha_fin >= ?');
       params.push(fecha_fin);
     }
     if (disponibilidad) {

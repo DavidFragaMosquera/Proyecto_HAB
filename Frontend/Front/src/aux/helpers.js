@@ -17,6 +17,14 @@ import axios from 'axios'
     clearId();
   }
 
+  export function isLogged() {
+    const authToken = localStorage.getItem("token");
+    if (authToken) {
+      return true;
+    }
+    return false;
+  }
+
   export function formatDateToDB(date) {
     return format(date, "MM-dd-yyyy");
   }

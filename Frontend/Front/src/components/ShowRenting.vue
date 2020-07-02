@@ -41,7 +41,7 @@
           </div>
         </div>
         <br>
-        <button @click="verArticuloEvent">Volver al menu</button>
+        <!-- <button @click="verArticuloEvent">Volver al menu</button> -->
       </div>
 <!-- VER TODAS LAS CAMARAS -->
     <div class="camaras"
@@ -78,8 +78,8 @@
         @click="mostrarAccesoriosEvent(index)">
       </div>
     </div>
-<!-- VER TODOS LOS ACCESORIOS-->
-<!-- <button><router-link :to="{ name:'Products'}"> Volver al menú</router-link></button> -->    
+    <br>
+<button class="vol"><router-link :to="{ name:'Products'}"> Volver al menú</router-link></button>    
   </div>
 </template>
 
@@ -185,5 +185,11 @@ h2{
 
 router-link{
   text-decoration: none;
+}
+a{
+  color: white;
+}
+.vol{
+  margin-top: 2rem;
 }
 </style>

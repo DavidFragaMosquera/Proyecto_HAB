@@ -75,6 +75,7 @@
             <li>Pedido nº: {{ articuloAdquirido.id }}</li>
             <button @click="openModal(articuloAdquirido)">Valorar</button>
           </ul>
+<!-- VALORAR PRODUCTO -->
               <div v-show="modal" class="modal">
                 <div class="modalBox">
                     <h3>Puedes valorar tu producto para ayudar a otros usuarios. Gracias por tu tiempo</h3>
@@ -83,6 +84,8 @@
                       :rating="rating"
                       v-bind:star-size="33">
                     </star-rating>
+                    <br>
+                    <label for="comentario">Comentario sobre el producto adquirido</label>
                     <textarea
                       v-model="comentario"
                       name="commentario"
@@ -179,7 +182,6 @@
         <input type="text" v-model="newPrecio" placeholder="Precio" />
         <br>
         <label for="descripcion">Descripción</label>
-        <!-- <input type="text" v-model="newDescripcion" placeholder="Descripcion" /> -->
         <br>
         <textarea 
             name="descripcion"
@@ -216,8 +218,6 @@
     <div class="editUs" v-show="showEdit">
       <h2>Editar usuario</h2>
       <br>
-      <!-- <label for="biografia">Biografia</label> 
-      <input type="text" v-model="newDescripcion" placeholder="Biografia" /> -->
       <label for="imagen">Cambiar foto de perfil</label>
       <br>
       <input type="file" id="imagen" ref="imagen" @change="handleFileUpload()" />
@@ -372,7 +372,6 @@ export default {
       formData.append("descripcion", self.newDescripcion);
       formData.append("nombre", self.newNombre);
       formData.append("apellidos", self.newApellidos);
-       /*       formData.append("fecha_nacimiento", self.userData.fecha_nacimiento);  */
       formData.append("mail", self.newMail);
       formData.append("telefono", self.newTelefono);
       formData.append("direccion", self.newDireccion);
@@ -400,7 +399,6 @@ export default {
       this.newDescripcion = this.userData.descripcion;
       this.newNombre = this.userData.nombre;
       this.newApellidos = this.userData.apellidos;
-      /*       this.newFechaNacimiento = this.userData.fecha_nacimiento */
       this.newMail = this.userData.mail;
       this.newTelefono = this.userData.telefono;
       this.newDireccion = this.userData.direccion;
@@ -658,7 +656,7 @@ export default {
       Swal.fire({
         icon: "warning",
         title: "¿Eliminar cuenta?",
-        text: "You won't be able to revert this!",
+        text: "Si confirmas tu cuenta se eliminará",
         showCancelButton: true,
         confirmButtonText: "Si, borrar cuenta",
       }).then((result) => {

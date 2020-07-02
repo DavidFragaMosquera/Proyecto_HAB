@@ -3,21 +3,26 @@
   <div id="nav">
       <h1>P  I  C  S  F  Y</h1>
       <p><router-link :to="{ name:'Home'}"> Home</router-link></p>
-      <p><router-link :to="{ name:'Login'}"> Login </router-link></p>
+      <p><router-link :to="{ name:'Login'}" v-show="!seeIsLogged"> Login </router-link></p>
       <p><router-link :to="{ name:'Products'}">Productos</router-link></p>
-      <p><router-link :to="{ name:'NewUser'}"> Registrate </router-link></p>
-      <p><router-link :to="{ name:'Profile'}"> Mi perfil </router-link></p>
+      <p><router-link :to="{ name:'NewUser'}" v-show="!seeIsLogged"> Registrate </router-link></p>
+      <p><router-link :to="{ name:'Profile'}" v-show="seeIsLogged"> Mi perfil </router-link></p>
       <p><router-link :to="{ name:'About'}"> About</router-link></p>
 
       <br/>
-      <button @click="logoutUser()">Logout</button>
+      <button @click="logoutUser()" v-show="seeIsLogged">Logout</button>
     </div>
 </template>
 
 <script>
-import { clearlogin, clearAuthToken, clearId } from "../aux/helpers.js";
+import { clearlogin, clearAuthToken, clearId, isLogged } from "../aux/helpers.js";
 export default {
   name: "MenuCustom",
+  data() {
+    return {
+      seeIsLogged: false
+    }
+  },
   methods: {
     logoutUser() {
       this.$router.push("/user/logIn");
@@ -25,7 +30,13 @@ export default {
       clearAuthToken();
       clearId();
     },
+    showIsLogged(){
+      this.seeIsLogged = isLogged();
+    }
   },
+  created() {
+    this.showIsLogged();
+  }
 };
 
 </script>
