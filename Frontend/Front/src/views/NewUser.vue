@@ -171,7 +171,7 @@ form {
 }
 
 .registro{
-  background: rgba(104, 104, 104, 0.109);
+  background: rgba(156, 156, 156, 0.185);
   width: 25%;
   padding: 2rem;
   border-radius: 20px;

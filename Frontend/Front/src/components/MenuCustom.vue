@@ -1,7 +1,7 @@
 <template>
 
   <div id="nav">
-      <h1>P  I  C  S  F  Y</h1>
+      <h1>PICSFY</h1>
       <p><router-link :to="{ name:'Home'}"> Home</router-link></p>
       <p v-show="!seeIsLogged"><router-link :to="{ name:'Login'}" > Login </router-link></p>
       <p><router-link :to="{ name:'Products'}">Productos</router-link></p>
@@ -54,7 +54,7 @@ export default {
 }
 #nav p{
   padding: 0.75rem; 
-  border-right: 1.5px solid #fff;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.205);
   text-decoration: none;
   color: black;
 }
@@ -64,7 +64,7 @@ export default {
   padding-right: 50rem;
   font-weight: bold;
   font-size: 2rem;
-  margin-left: -1.5rem;
+  letter-spacing: 30px;
 }
 
 #nav p:last-child{
@@ -77,7 +77,7 @@ button{
   font-size: 1rem;
   font-weight: bold;
   color: red;
-  background: rgba(47, 6, 47, 0.253);
+  background: rgba#000000;
 ;
 }
 .regist{

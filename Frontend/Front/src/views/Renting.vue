@@ -1,9 +1,8 @@
 <template>
   <div class="alquiler">
     <vue-headful title="Alquiler de equipos" />
-    <div class="imagen"></div>
     <div>
-      <h2>Alquiler de equipos</h2>
+      <h1>ALQUILER DE EQUIPOS</h1>
       <listaalquileres 
         class="productos"
         :camaras="camaras"
@@ -195,17 +194,9 @@ export default {
 </script>
 
 <style scoped>
-.alquiler{
-  background-image: url('../assets/estirado.jpg');
-  background-repeat: no-repeat; 
-  width: 100%;
+h1{
+  letter-spacing: 10px;
+  color: rgb(48, 175, 97);
+  text-decoration: overline;
 }
-.imagen{
-  background-image: url('../assets/alquiler.jpg');
-  width: 100%;
-}
-.productos{
-  margin: 20rem;
-}
-
 </style>

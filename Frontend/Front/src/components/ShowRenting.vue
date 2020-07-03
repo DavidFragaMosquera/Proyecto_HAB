@@ -46,7 +46,7 @@
 <!-- VER TODAS LAS CAMARAS -->
     <div class="camaras"
           v-show="!verArticulos">  
-          <h2>Camaras</h2>
+          <h2>CAMARAS</h2>
       <div  
            v-for="(camara, index) in camaras" 
            :key="camara.id">
@@ -58,7 +58,7 @@
 <!-- VER TODOS LOS DRONES -->
         <div 
           v-show="!verArticulos">  
-          <h2>Drones</h2>
+          <h2>DRONES</h2>
       <div class="Drones" 
            v-for="(dron, index) in drones" 
            :key="dron.tittle">
@@ -70,7 +70,7 @@
 <!-- VER TODOS LOS ACCESORIOS-->
       <div 
           v-show="!verArticulos">  
-          <h2>Accesorios</h2>
+          <h2>ACCESORIOS</h2>
       <div class="Accesorios" 
            v-for="(accesorio, index) in accesorios" 
            :key="accesorio.tittle">
@@ -178,9 +178,10 @@ div img:hover {
 }
 
 h2{
-  color: rgb(48, 175, 97);
+  letter-spacing: 10px;
   text-align: left;
   margin-left: 6rem;  
+  display: flex;
 }
 
 router-link{

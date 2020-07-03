@@ -15,7 +15,7 @@
        <h4>✔️  Eliminar tu cuenta</h4>       
       </div>
 <!-- LISTADO DATOS DE USUARIO -->
-      <div v-show="!showEdit">
+      <div>
        <img class="imgPerfil" :src="userData.imagen" alt="foto perfil usuario" />
         <ul class="datosperfil">
           <li> {{ userData.nombre }} {{ userData.apellidos }}</li>
@@ -202,6 +202,7 @@
 <!-- LISTADO ARTICULOS DE USUARIO -->
     <div class="articulosUsuario" v-show="!showProducts">
       <h2>Mis productos</h2>
+        <br>
         <ul v-for="articulo in articulos" :key="articulo.id">
           <li><img :src="articulo.imagen" alt="imagen articulo"></li>
           <li>Nombre: {{ articulo.nombre_articulo }}</li>
@@ -229,10 +230,6 @@
       <label for="apellidos">Apellidos</label>
       <br>
       <input type="text" v-model="newApellidos" placeholder="Apellidos"/>
-      <br>
-      <label for="fecha_nacimiento">Fecha de nacimiento</label>
-      <br>
-      <input type="date" v-model="newFechaNacimiento"/>
       <br>
       <label for="mail">e-mail</label>
       <br>
@@ -555,7 +552,7 @@ export default {
       this.newDescripcion = articulo.descripcion;
       this.seeEditProduct = true;
     },
-//BORRAR PRODUCTO
+// BORRAR PRODUCTO
  deleteProduct(articulo) {
       const self = this;
       const id = articulo.id;
@@ -751,8 +748,8 @@ export default {
   box-shadow: 0px 8px 6px -6px rgba(78, 90, 100, 0.479); 
 }
 .datosperfil{
-  background: rgba(47, 6, 47, 0.253);
-  padding-top: 120px;
+  background: rgba(37, 33, 37, 0.253);
+  padding-top: 100px;
   padding-right: 350px;
   text-align: left;
   padding-bottom: 70px;
@@ -811,7 +808,6 @@ export default {
   justify-content: center;
   flex-grow: initial;
 }
-
 .articulosUsuario li, .boughtProducts li, .editPassword input{
   margin-bottom: 1rem;
 }

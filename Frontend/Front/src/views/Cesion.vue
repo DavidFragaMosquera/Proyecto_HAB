@@ -2,7 +2,7 @@
   <div class="Cesion">
     <vue-headful title="Cesion derechos de imagen" />
     <div>
-        <h2>Cesion derechos de imagen</h2>
+        <h1>CESION DERECHOS DE IMAGEN</h1>
       <listacesion 
         :ecommerce_productos="ecommerce_productos"
         :articulo="articulo" 
@@ -171,3 +171,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+h1{
+  letter-spacing: 10px;
+  color: rgb(48, 175, 97);
+  text-decoration: overline;
+}
+</style>

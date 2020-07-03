@@ -45,7 +45,7 @@
 <!-- VER ARTICULOS ECOMMERCE Y PRODUCTOS -->
     <div class="ecommerce_productos"
           v-show="!verArticulos">  
-          <h2>Fotografias e-commerce y producto</h2>
+          <h2>E-COMMERCE Y PRODUCTO</h2>
       <div 
            v-for="(ecommerce_producto, index) in ecommerce_productos" 
            :key="ecommerce_producto.id">
@@ -56,7 +56,7 @@
 <!-- VER ARTICULOS BODAS Y EVENTOS -->
         <div 
           v-show="!verArticulos">  
-          <h2>Fotografias bodas y eventos</h2>
+          <h2>BODAS Y EVENTOS</h2>
       <div class="Bodas y eventos" 
            v-for="(bodas_eventos, index) in bodas_eventoss" 
            :key="bodas_eventos.tittle">
@@ -67,7 +67,7 @@
 <!-- VER ARTICULOS RETRATO Y NATURALEZA -->
       <div 
           v-show="!verArticulos">  
-          <h2>Fotografias retrato y naturaleza</h2>
+          <h2>RETRATO Y NATURALEZA</h2>
       <div class="Retrato" 
            v-for="(retrato_naturaleza, index) in retrato_naturalezas" 
            :key="retrato_naturaleza.tittle">
@@ -176,9 +176,10 @@ div img:hover {
 }
 
 h2{
-  color: rgb(48, 175, 97);
+  letter-spacing: 10px;
   text-align: left;
   margin-left: 6rem;  
+  display: flex; 
 }
 
 router-link{
